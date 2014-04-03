@@ -187,6 +187,7 @@ public class StandardCalculator extends JFrame {
 			}
 			
 			else if (e.getSource() == jbtMR) {
+				jtfDisplayArea.setText(answerToString(getMemory()));
 			}
 			else if (e.getSource() == jbtMC) {
 				jtfDisplayArea.setText("0");
@@ -198,14 +199,16 @@ public class StandardCalculator extends JFrame {
 				setFontSize();
 			}	
 			else if (e.getSource() == jbtMPlus) {
-				setMemory(Double.parseDouble(jtfDisplayArea.getText()));
+				setMemory(getMemory() + Double.parseDouble(jtfDisplayArea.getText()));
 				jtfDisplayArea.setText("0");
+				setTemp(0);
 				setAnswer(0);
 				jlM.setText("M");
 			}
 			else if (e.getSource() == jbtMMinus) {
-				setMemory(Double.parseDouble(jtfDisplayArea.getText()));
+				setMemory(getMemory() - Double.parseDouble(jtfDisplayArea.getText()));
 				jtfDisplayArea.setText("0");
+				setTemp(0);
 				setAnswer(0);
 				jlM.setText("M");
 			}
