@@ -37,9 +37,6 @@ public class StandardCalculator extends JFrame {
 	private JButton jbtDecimalPoint = new JButton(".");
 	private JButton jbtToggleSign = new JButton("กำ");
 	private JButton jbtEqual = new JButton("=");
-	
-	private double answer = 0;
-	private double memory = 0;
 
 	public StandardCalculator() {
 		JPanel p1 = new JPanel(new BorderLayout());
@@ -124,41 +121,7 @@ public class StandardCalculator extends JFrame {
 		jbtEqual.addActionListener(buttons);
 	}
 	
-	public void setAnswer(double newAnswer) {
-		answer = newAnswer;
-	}
-	
-	public double getAnswer() {
-		return answer;
-	}
-	
-	public void setMemory(double newMemory) {
-		memory = newMemory;
-	}
-	
-	public double getMemory() {
-		return memory;
-	}
-	
-	public String answerToString(double answer) {
-		String string = String.valueOf(answer);
-		int indexOfDot = string.indexOf('.');
-		String sub = string.substring(indexOfDot + 1);
-		
-		while (sub.endsWith("0")) {
-			if (sub.length() > 1)
-				sub = sub.substring(0, sub.length());
-			else
-				sub = "";
-		}
-		
-		string = string.substring(0, indexOfDot + 1) + sub;
-		
-		if (string.endsWith("."))
-			string = string.substring(0, string.length() - 1);
-		
-		return string;
-	}
+	enum Operator {NONE, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO};
 	
 	public class ButtonListener implements ActionListener {
 		@Override
@@ -166,6 +129,8 @@ public class StandardCalculator extends JFrame {
 			if(e.getSource() == jbtClear) {
 				jtfDisplayArea.setText("0");
 				setAnswer(0);
+				setTemp(0);
+				setOperator(Operator.NONE);
 				setFontSize();
 			}
 			else if (e.getSource() == jbtBackspace) {
@@ -176,16 +141,49 @@ public class StandardCalculator extends JFrame {
 			}
 			
 			else if (e.getSource() == jbtPlus) {
-				
+				if (getAnswer() != 0) {
+					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
+					setAnswer(getAnswer() + getTemp());
+					jtfDisplayArea.setText(answerToString(getAnswer()));
+				}
+				else 
+					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+				setOperator(Operator.PLUS);
+				setFontSize();
 			}	
 			else if (e.getSource() == jbtMinus) {
+				if (getAnswer() != 0) {
+					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
+					setAnswer(getAnswer() - getTemp());
+					jtfDisplayArea.setText(answerToString(getAnswer()));
+				}
+				else 
+					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
 				
+				setOperator(Operator.MINUS);
+				setFontSize();
 			}
 			else if (e.getSource() == jbtMultiplication) {
-				
+				if (getAnswer() != 0) {
+					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
+					setAnswer(getAnswer() * getTemp());
+					jtfDisplayArea.setText(answerToString(getAnswer()));
+				}
+				else
+					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+				setOperator(Operator.MULTIPLICATION);
+				setFontSize();
 			}
 			else if (e.getSource() == jbtDivision) {
-				
+				if (getAnswer() != 0) {
+					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
+					setAnswer(getAnswer() / getTemp());
+					jtfDisplayArea.setText(answerToString(getAnswer()));
+				}
+				else
+					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+				setOperator(Operator.DIVISION);
+				setFontSize();
 			}
 			
 			else if (e.getSource() == jbtMR) {
@@ -194,28 +192,32 @@ public class StandardCalculator extends JFrame {
 				jtfDisplayArea.setText("0");
 				jlM.setText("");
 				setAnswer(0);
+				setTemp(0);
 				setMemory(0);
+				setOperator(Operator.NONE);
 				setFontSize();
 			}	
 			else if (e.getSource() == jbtMPlus) {
+				setMemory(Double.parseDouble(jtfDisplayArea.getText()));
 				jtfDisplayArea.setText("0");
 				setAnswer(0);
 				jlM.setText("M");
 			}
 			else if (e.getSource() == jbtMMinus) {
+				setMemory(Double.parseDouble(jtfDisplayArea.getText()));
 				jtfDisplayArea.setText("0");
 				setAnswer(0);
 				jlM.setText("M");
 			}
 			
 			else if (e.getSource() == jbtZero) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "0");
 					setFontSize();
 				}
 			}
 			else if (e.getSource() == jbtOne) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "1");	
 					setFontSize();
 				}
@@ -223,7 +225,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("1");
 			}
 			else if (e.getSource() == jbtTwo) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "2");
 					setFontSize();
 				}
@@ -231,7 +233,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("2");
 			}	
 			else if (e.getSource() == jbtThree) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "3");
 					setFontSize();
 				}
@@ -239,7 +241,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("3");
 			}
 			else if (e.getSource() == jbtFour) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "4");
 					setFontSize();
 				}
@@ -247,7 +249,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("4");
 			}
 			else if (e.getSource() == jbtFive) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "5");
 					setFontSize();
 				}
@@ -255,7 +257,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("5");
 			}
 			else if (e.getSource() == jbtSix) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "6");
 					setFontSize();
 				}
@@ -263,7 +265,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("6");
 			}
 			else if (e.getSource() == jbtSeven) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "7");
 					setFontSize();
 				}
@@ -271,7 +273,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("7");
 			}	
 			else if (e.getSource() == jbtEight) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "8");
 					setFontSize();
 				}
@@ -279,7 +281,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("8");
 			}
 			else if (e.getSource() == jbtNine) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
+				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "9");
 					setFontSize();
 				}
@@ -290,9 +292,18 @@ public class StandardCalculator extends JFrame {
 			else if (e.getSource() == jbtSquareRoot) {
 				setAnswer(Math.sqrt(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
+				setFontSize();
 			}
 			else if (e.getSource() == jbtModulo) {
-
+				if (getAnswer() != 0) {
+					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
+					setAnswer(getAnswer() % getTemp());
+					jtfDisplayArea.setText(answerToString(getAnswer()));
+				}
+				else
+					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+				setOperator(Operator.MODULO);
+				setFontSize();
 			}
 			else if (e.getSource() == jbtDecimalPoint) {
 				if(jtfDisplayArea.getText().indexOf('.') == -1) {
@@ -301,21 +312,106 @@ public class StandardCalculator extends JFrame {
 				}
 			}
 			else if (e.getSource() == jbtToggleSign) {
-				if(jtfDisplayArea.getText().startsWith("-") == false)
-					jtfDisplayArea.setText("-" + jtfDisplayArea.getText());
-				else
-					jtfDisplayArea.setText(jtfDisplayArea.getText().substring(1));
+				if (jtfDisplayArea.getText().equals("0") == false) {
+					if(jtfDisplayArea.getText().startsWith("-") == false)
+						jtfDisplayArea.setText("-" + jtfDisplayArea.getText());
+					else 
+							jtfDisplayArea.setText(jtfDisplayArea.getText().substring(1));
+				}
 			}
 			else if (e.getSource() == jbtEqual) {
+				if (getTemp() == 0)
+					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
 				
+				switch(getOperator()) {
+					case PLUS:
+						setAnswer((getAnswer() + getTemp()));
+						break;
+					case MINUS:
+						setAnswer(getAnswer() - getTemp());
+						break;
+					case MULTIPLICATION:
+						setAnswer(getAnswer() * getTemp());
+						break;
+					case DIVISION:
+						setAnswer(getAnswer() / getTemp());
+						break;
+					case MODULO:
+						setAnswer(getAnswer() % getTemp());
+						break;
+					default:
+				}
+				
+				jtfDisplayArea.setText(answerToString(getAnswer()));
+				setFontSize();
 			}
 		}
+		private double answer = 0;
+		private double memory = 0;
+		private double temp = 0;
+
+		private Operator operator;
+		
+		public void setAnswer(double newAnswer) {
+			answer = newAnswer;
+		}
+		
+		public double getAnswer() {
+			return answer;
+		}
+		
+		public void setMemory(double newMemory) {
+			memory = newMemory;
+		}
+		
+		public double getMemory() {
+			return memory;
+		}
+		
+		public void setTemp(double newTemp) {
+			temp = newTemp;
+		}
+		
+		public double getTemp() {
+			return temp;
+		}
+		
+		public void setOperator(Operator newOperator) {
+			operator = newOperator;
+		}
+		
+		public Operator getOperator() {
+			return operator;
+		}
+		
+		public String answerToString(double answer) {
+			String string = String.valueOf(answer);
+			int indexOfDot = string.indexOf('.');
+			String sub = string.substring(indexOfDot + 1);
+			
+			while (sub.endsWith("0")) {
+				if (sub.length() > 1)
+					sub = sub.substring(0, sub.length());
+				else
+					sub = "";
+			}
+			
+			string = string.substring(0, indexOfDot + 1) + sub;
+			
+			if (string.endsWith("."))
+				string = string.substring(0, string.length() - 1);
+			
+			return string;
+		}
+		
 		
 		public void setFontSize() {
 			if (jtfDisplayArea.getText().length() > 9 ) {
 				if (jtfDisplayArea.getText().length() % 2 == 0)
 					jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35 - ((jtfDisplayArea.getText().length() - 9))));
 			}
+			else
+				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
 		}
 	}
 	
