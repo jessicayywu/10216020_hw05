@@ -146,8 +146,10 @@ public class StandardCalculator extends JFrame {
 					setAnswer(getAnswer() + getTemp());
 					jtfDisplayArea.setText(answerToString(getAnswer()));
 				}
-				else 
+				else {
 					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+					jtfDisplayArea.setText("0");
+				}
 				setOperator(Operator.PLUS);
 				setFontSize();
 			}	
@@ -157,8 +159,10 @@ public class StandardCalculator extends JFrame {
 					setAnswer(getAnswer() - getTemp());
 					jtfDisplayArea.setText(answerToString(getAnswer()));
 				}
-				else 
+				else {
 					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+					jtfDisplayArea.setText("0");
+				}
 				
 				setOperator(Operator.MINUS);
 				setFontSize();
@@ -169,8 +173,10 @@ public class StandardCalculator extends JFrame {
 					setAnswer(getAnswer() * getTemp());
 					jtfDisplayArea.setText(answerToString(getAnswer()));
 				}
-				else
+				else {
 					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+					jtfDisplayArea.setText("0");
+				}
 				setOperator(Operator.MULTIPLICATION);
 				setFontSize();
 			}
@@ -180,8 +186,10 @@ public class StandardCalculator extends JFrame {
 					setAnswer(getAnswer() / getTemp());
 					jtfDisplayArea.setText(answerToString(getAnswer()));
 				}
-				else
+				else {
 					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+					jtfDisplayArea.setText("0");
+				}
 				setOperator(Operator.DIVISION);
 				setFontSize();
 			}
@@ -214,13 +222,13 @@ public class StandardCalculator extends JFrame {
 			}
 			
 			else if (e.getSource() == jbtZero) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "0");
 					setFontSize();
 				}
 			}
 			else if (e.getSource() == jbtOne) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "1");	
 					setFontSize();
 				}
@@ -228,7 +236,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("1");
 			}
 			else if (e.getSource() == jbtTwo) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "2");
 					setFontSize();
 				}
@@ -236,7 +244,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("2");
 			}	
 			else if (e.getSource() == jbtThree) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "3");
 					setFontSize();
 				}
@@ -244,7 +252,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("3");
 			}
 			else if (e.getSource() == jbtFour) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "4");
 					setFontSize();
 				}
@@ -252,7 +260,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("4");
 			}
 			else if (e.getSource() == jbtFive) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "5");
 					setFontSize();
 				}
@@ -260,7 +268,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("5");
 			}
 			else if (e.getSource() == jbtSix) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "6");
 					setFontSize();
 				}
@@ -268,7 +276,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("6");
 			}
 			else if (e.getSource() == jbtSeven) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "7");
 					setFontSize();
 				}
@@ -276,7 +284,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("7");
 			}	
 			else if (e.getSource() == jbtEight) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "8");
 					setFontSize();
 				}
@@ -284,7 +292,7 @@ public class StandardCalculator extends JFrame {
 					jtfDisplayArea.setText("8");
 			}
 			else if (e.getSource() == jbtNine) {
-				if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
+				if (jtfDisplayArea.getText().equals("0") == false) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + "9");
 					setFontSize();
 				}
@@ -303,8 +311,10 @@ public class StandardCalculator extends JFrame {
 					setAnswer(getAnswer() % getTemp());
 					jtfDisplayArea.setText(answerToString(getAnswer()));
 				}
-				else
+				else {
 					setAnswer(Double.parseDouble(jtfDisplayArea.getText()));
+					jtfDisplayArea.setText("0");
+				}
 				setOperator(Operator.MODULO);
 				setFontSize();
 			}
