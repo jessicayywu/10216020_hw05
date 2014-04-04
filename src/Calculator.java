@@ -3,7 +3,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class StandardCalculator extends JFrame {
+public class Calculator extends JFrame {	
 	private JTextField jtfDisplayArea = new JTextField("0");
 	
 	private JLabel jlM = new JLabel("M");
@@ -38,7 +38,25 @@ public class StandardCalculator extends JFrame {
 	private JButton jbtToggleSign = new JButton("กำ");
 	private JButton jbtEqual = new JButton("=");
 
-	public StandardCalculator() {
+	public Calculator() {
+		JMenuBar jmb = new JMenuBar();
+		setJMenuBar(jmb);
+		
+		JMenu viewMenu = new JMenu("View");
+		viewMenu.setMnemonic('V');
+		jmb.add(viewMenu);
+		
+		JMenu helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic('H');
+		jmb.add(helpMenu);
+		
+		viewMenu.add(new JMenuItem("Standard", 'S'));
+		viewMenu.add(new JMenuItem("Advanced", 'A'));
+		
+		helpMenu.add(new JMenuItem("View Help", 'H'));
+		helpMenu.addSeparator();
+		helpMenu.add(new JMenuItem("About", 'A'));
+		
 		JPanel p1 = new JPanel(new BorderLayout());
 		jlM.setText("");
 		jlM.setOpaque(true);
@@ -429,11 +447,12 @@ public class StandardCalculator extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		StandardCalculator frame = new StandardCalculator();
+		Calculator frame = new Calculator();
 		frame.setSize(300,350);
-		frame.setTitle("Standard Calculator");
+		frame.setTitle("Calculator");
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+
 	}
 }
