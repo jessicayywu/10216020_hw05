@@ -332,82 +332,102 @@ public class Calculator extends JFrame {
 			}
 			
 			else if (e.getSource() == jbtZero) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "0");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "0");
+						setFontSize();
+					}	
 				}
 			}
 			else if (e.getSource() == jbtOne) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "1");	
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "1");	
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("1");
 				}
-				else
-					jtfDisplayArea.setText("1");
 			}
 			else if (e.getSource() == jbtTwo) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "2");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "2");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("2");
 				}
-				else
-					jtfDisplayArea.setText("2");
 			}	
 			else if (e.getSource() == jbtThree) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "3");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "3");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("3");
 				}
-				else
-					jtfDisplayArea.setText("3");
 			}
 			else if (e.getSource() == jbtFour) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "4");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "4");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("4");
 				}
-				else
-					jtfDisplayArea.setText("4");
 			}
 			else if (e.getSource() == jbtFive) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "5");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "5");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("5");
 				}
-				else
-					jtfDisplayArea.setText("5");
 			}
 			else if (e.getSource() == jbtSix) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "6");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "6");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("6");
 				}
-				else
-					jtfDisplayArea.setText("6");
 			}
 			else if (e.getSource() == jbtSeven) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "7");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "7");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("7");
 				}
-				else
-					jtfDisplayArea.setText("7");
 			}	
 			else if (e.getSource() == jbtEight) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "8");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "8");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("8");
 				}
-				else
-					jtfDisplayArea.setText("8");
 			}
 			else if (e.getSource() == jbtNine) {
-				if (jtfDisplayArea.getText().equals("0") == false) {
-					jtfDisplayArea.setText(jtfDisplayArea.getText() + "9");
-					setFontSize();
+				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
+					if (jtfDisplayArea.getText().equals("0") == false) {
+						jtfDisplayArea.setText(jtfDisplayArea.getText() + "9");
+						setFontSize();
+					}
+					else
+						jtfDisplayArea.setText("9");
 				}
-				else
-					jtfDisplayArea.setText("9");
 			}
 			
 			else if (e.getSource() == jbtSquareRoot) {
@@ -529,10 +549,20 @@ public class Calculator extends JFrame {
 		
 		
 		public void setFontSize() {
-			if (jtfDisplayArea.getText().length() > 9 ) {
-				if (jtfDisplayArea.getText().length() % 2 == 0)
-					jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35 - ((jtfDisplayArea.getText().length() - 9))));
+			int length = 9;
+			int textLength = jtfDisplayArea.getText().length();
+			
+			switch(getWidth()) {
+				case 300:
+					length = 9;
+					break;
+				case 650:
+					length = 30;
 			}
+			
+			if (jtfDisplayArea.getText().length() > length ) 
+				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35 - ((textLength - length))));
+
 			else
 				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
 		}
