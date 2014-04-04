@@ -25,6 +25,17 @@ public class TestBigNumber {
 		
 		System.out.println("The product is: ");
 		System.out.println(product);
+		
+		System.out.print("Enter the first number: ");
+		String number5 = input.nextLine();
+		
+		System.out.print("Enter the second number: ");
+		String number6 = input.nextLine();
+		
+		String difference = arrayToString(minus(numberToArray(number5), numberToArray(number6)));
+		
+		System.out.println("The difference is: ");
+		System.out.println(difference);
 	}
 	
 	public static int[] numberToArray(String number) {
@@ -70,6 +81,31 @@ public class TestBigNumber {
 		return sum;
 	}
 	
+	public static int[] minus(int[] bigNumber1, int[] bigNumber2) {
+		int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
+		int[] difference = new int[length];
+		int[] bigNum1 = new int[length];
+		int[] bigNum2 = new int[length];
+		
+		for(int m = 1; m <= bigNumber1.length; m++)
+			bigNum1[bigNum1.length - m] = bigNumber1[bigNumber1.length - m];
+	
+		for(int n = 1; n <= bigNumber2.length; n++)
+			bigNum2[bigNum2.length - n] = bigNumber2[bigNumber2.length - n];
+		
+		for (int i = 0; i < length; i++)
+			difference[i] = bigNum1[i] - bigNum2[i];
+			
+		for (int j = 1; j < length; j++) {
+			if (difference[j] < 0) {
+				difference[j + 1] -= 1000;
+				difference[j] += 10000;
+			}
+		}
+		
+		return difference;
+	}
+	
 	public static int[] multiply(int[] bigNumber1, int[] bigNumber2) {
 		int length = bigNumber1.length * bigNumber2.length;
 		int[] product = new int[length];
@@ -85,7 +121,7 @@ public class TestBigNumber {
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < length; j++) {
 				if (i + j < length)
-					product[i + j] = bigNum1[i] * bigNum2[j];
+					product[i + j] += bigNum1[i] * bigNum2[j];
 			}
 		}
 		
