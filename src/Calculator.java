@@ -195,8 +195,8 @@ public class Calculator extends JFrame {
 				setSize(650,350);
 				setTitle("Advanced Calculator");
 				add(p1, BorderLayout.NORTH);
-				add(p2, BorderLayout.WEST);
-				add(p3, BorderLayout.EAST);
+				add(p2, BorderLayout.EAST);
+				add(p3, BorderLayout.WEST);
 			}
 		});
 		
@@ -742,7 +742,7 @@ public class Calculator extends JFrame {
 				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
 		}
 		
-		public long factorial(int n) {
+		public double factorial(int n) {
 			if (n == 0)
 				return 1;
 			else
