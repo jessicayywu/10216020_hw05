@@ -609,8 +609,7 @@ public class Calculator extends JFrame {
 				setFontSize();
 			}
 			else if (e.getSource() == jbtE) {
-				setAnswer(Math.E);
-				jtfDisplayArea.setText(answerToString(getAnswer()));
+				jtfDisplayArea.setText(answerToString(Math.E));
 				setFontSize();
 			}
 			else if (e.getSource() == jbtEx) {
@@ -657,8 +656,7 @@ public class Calculator extends JFrame {
 				setFontSize();
 			}
 			else if (e.getSource() == jbtPi) {
-				setAnswer(Math.PI);
-				jtfDisplayArea.setText(answerToString(getAnswer()));
+				jtfDisplayArea.setText(answerToString(Math.PI));
 				setFontSize();
 			}
 			else if (e.getSource() == jbtFactorial) {
