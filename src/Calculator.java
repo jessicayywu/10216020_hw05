@@ -4,6 +4,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Calculator extends JFrame {	
+	JMenuItem jmiStandard = new JMenuItem("Standard", 'S');
+	JMenuItem jmiAdvanced = new JMenuItem("Advanced", 'A');
+	JMenuItem jmiViewHelp = new JMenuItem("View Help", 'H');
+	JMenuItem jmiAbout = new JMenuItem("About", 'A');
+	
 	private JTextField jtfDisplayArea = new JTextField("0");
 	
 	private JLabel jlM = new JLabel("M");
@@ -37,6 +42,34 @@ public class Calculator extends JFrame {
 	private JButton jbtDecimalPoint = new JButton(".");
 	private JButton jbtToggleSign = new JButton("¡Ó");
 	private JButton jbtEqual = new JButton("=");
+	
+	private JButton jbtSin = new JButton("sin");
+	private JButton jbtCos = new JButton("cos");
+	private JButton jbtTan = new JButton("tan");
+	private JButton jbtCsc = new JButton("csc");
+	private JButton jbtSec = new JButton("sec");
+	private JButton jbtCot = new JButton("cot");
+	private JButton jbtAsin = new JButton("asin");
+	private JButton jbtAcos = new JButton("acos");
+	private JButton jbtAtan = new JButton("atan");
+	private JButton jbtSinh = new JButton("sinh");
+	private JButton jbtCosh = new JButton("cosh");
+	private JButton jbtTanh = new JButton("tanh");
+	
+	private JButton jbtLn = new JButton("ln");
+	private JButton jbtLog = new JButton("log");
+	private JButton jbtLogxy = new JButton("<html>log<sub>x</sub><sup>y</sup></html>");
+	private JButton jbtE = new JButton("e");
+	private JButton jbtEx = new JButton("<html>e<sup>x</sup></html>");
+	private JButton jbtX2 = new JButton("<html>x<sup>2</sup></html>");
+	private JButton jbtX3 = new JButton("<html>x<sup>3</sup></html>");
+	private JButton jbtXy = new JButton("<html>x<sup>y</sup></html>");
+	private JButton jbt10x = new JButton("<html>10<sup>x</sup></html>");
+	
+	private JButton jbtCeil = new JButton("ceil");
+	private JButton jbtFloor = new JButton("floor");
+	private JButton jbtPi = new JButton("£k");
+	private JButton jbtFactorial = new JButton("n!");
 
 	public Calculator() {
 		JMenuBar jmb = new JMenuBar();
@@ -50,14 +83,15 @@ public class Calculator extends JFrame {
 		helpMenu.setMnemonic('H');
 		jmb.add(helpMenu);
 		
-		viewMenu.add(new JMenuItem("Standard", 'S'));
-		viewMenu.add(new JMenuItem("Advanced", 'A'));
+		viewMenu.add(jmiStandard);
+		viewMenu.add(jmiAdvanced);
 		
-		helpMenu.add(new JMenuItem("View Help", 'H'));
+		helpMenu.add(jmiViewHelp);
 		helpMenu.addSeparator();
-		helpMenu.add(new JMenuItem("About", 'A'));
+		helpMenu.add(jmiAbout);
+		/////////////////////////////////////////////////////////////
 		
-		JPanel p1 = new JPanel(new BorderLayout());
+		final JPanel p1 = new JPanel(new BorderLayout());
 		jlM.setText("");
 		jlM.setOpaque(true);
 		jlM.setBackground(Color.WHITE);
@@ -68,9 +102,9 @@ public class Calculator extends JFrame {
 		jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
 		jtfDisplayArea.setHorizontalAlignment(JTextField.RIGHT);
 		p1.add(jtfDisplayArea, BorderLayout.CENTER);
+		/////////////////////////////////////////////////////////////
 		
-		
-		JPanel p2 = new JPanel(new GridLayout(5, 5, 6, 6));
+		final JPanel p2 = new JPanel(new GridLayout(5, 5, 6, 6));
 		
 		p2.add(jbtClear);
 		p2.add(jbtBackspace);
@@ -101,11 +135,69 @@ public class Calculator extends JFrame {
 		p2.add(jbtDecimalPoint);
 		p2.add(jbtToggleSign);
 		p2.add(jbtEqual);
+		/////////////////////////////////////////////////////////////
 		
+		final JPanel p3 = new JPanel(new GridLayout(5, 5, 6, 6));
+		
+		p3.add(jbtSin);
+		p3.add(jbtCos);
+		p3.add(jbtTan);
+		p3.add(jbtLn);
+		p3.add(jbtX2);
+		
+		p3.add(jbtCsc);
+		p3.add(jbtSec);
+		p3.add(jbtCot);
+		p3.add(jbtLog);
+		p3.add(jbtX3);
+		
+		p3.add(jbtAsin);
+		p3.add(jbtAcos);
+		p3.add(jbtAtan);
+		p3.add(jbtLogxy);
+		p3.add(jbt10x);
+		
+		p3.add(jbtSinh);
+		p3.add(jbtCosh);
+		p3.add(jbtTanh);
+		p3.add(jbtEx);
+		p3.add(jbtXy);
+		
+		p3.add(jbtCeil);
+		p3.add(jbtFloor);
+		p3.add(jbtPi);
+		p3.add(jbtE);
+		p3.add(jbtFactorial);
+		
+		/////////////////////////////////////////////////////////////
 		setLayout(new BorderLayout());
+		setSize(300, 350);
 		add(p1, BorderLayout.NORTH);
 		add(p2, BorderLayout.CENTER);
 		
+		/////////////////////////////////////////////////////////////
+		jmiStandard.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setLayout(new BorderLayout());
+				setSize(300, 350);
+				add(p1, BorderLayout.NORTH);
+				add(p2, BorderLayout.CENTER);
+			}
+		});
+
+		jmiAdvanced.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setLayout(new BorderLayout());
+				setSize(650,350);
+				add(p1, BorderLayout.NORTH);
+				add(p2, BorderLayout.WEST);
+				add(p3, BorderLayout.EAST);
+			}
+		});
+		
+		/////////////////////////////////////////////////////////////
 		ButtonListener buttons = new ButtonListener(); 
 		
 		jbtClear.addActionListener(buttons);
@@ -448,7 +540,7 @@ public class Calculator extends JFrame {
 	
 	public static void main(String[] args) {
 		Calculator frame = new Calculator();
-		frame.setSize(300,350);
+		//frame.setSize(300,350);
 		frame.setTitle("Calculator");
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
