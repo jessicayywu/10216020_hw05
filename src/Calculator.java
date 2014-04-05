@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -11,6 +12,7 @@ public class Calculator extends JFrame {
 	
 	JMenuItem jmiStandard = new JMenuItem("Standard", 'S');
 	JMenuItem jmiAdvanced = new JMenuItem("Advanced", 'A');
+	JMenuItem jmiBigNumber = new JMenuItem("Big Number BETA", 'B');
 	JMenuItem jmiViewHelp = new JMenuItem("View Help", 'H');
 	JMenuItem jmiAbout = new JMenuItem("About", 'A');
 	
@@ -75,6 +77,27 @@ public class Calculator extends JFrame {
 	private JButton jbtFloor = new JButton("floor");
 	private JButton jbtPi = new JButton("£k");
 	private JButton jbtFactorial = new JButton("n!");
+	
+	private JTextArea jtaDisplayArea = new JTextArea("0", 30, 30);
+	
+	private JButton jbtBigZero = new JButton("0");
+	private JButton jbtBigOne = new JButton("1");
+	private JButton jbtBigTwo = new JButton("2");
+	private JButton jbtBigThree = new JButton("3");
+	private JButton jbtBigFour = new JButton("4");
+	private JButton jbtBigFive = new JButton("5");
+	private JButton jbtBigSix = new JButton("6");
+	private JButton jbtBigSeven = new JButton("7");
+	private JButton jbtBigEight = new JButton("8");
+	private JButton jbtBigNine = new JButton("9");
+	
+	private JButton jbtBigPlus = new JButton("+");
+	private JButton jbtBigMinus = new JButton("-");
+	private JButton jbtBigMultiplication = new JButton("¡Ñ");
+	private JButton jbtBigDivision = new JButton("¡Ò");
+	
+	private JButton jbtBigEqual = new JButton("=");
+	private JButton jbtBigClear = new JButton("Clear");
 
 	public Calculator() {
 		
@@ -127,6 +150,7 @@ public class Calculator extends JFrame {
 		
 		viewMenu.add(jmiStandard);
 		viewMenu.add(jmiAdvanced);
+		viewMenu.add(jmiBigNumber);
 		
 		helpMenu.add(jmiViewHelp);
 		helpMenu.addSeparator();
@@ -212,6 +236,46 @@ public class Calculator extends JFrame {
 		p3.add(jbtFactorial);
 		
 		/////////////////////////////////////////////////////////////
+		
+		final JPanel p4 = new JPanel(new GridLayout(1, 10, 5, 5));
+		
+		p4.add(jbtBigZero);
+		p4.add(jbtBigOne);
+		p4.add(jbtBigTwo);
+		p4.add(jbtBigThree);
+		p4.add(jbtBigFour);
+		p4.add(jbtBigFive);
+		p4.add(jbtBigSix);
+		p4.add(jbtBigSeven);
+		p4.add(jbtBigEight);
+		p4.add(jbtBigNine);
+		
+		/////////////////////////////////////////////////////////////
+		
+		final JPanel p5 = new JPanel(new GridLayout(6, 1, 7, 7));
+		
+		jbtBigEqual.setEnabled(false);
+		
+		p5.add(jbtBigClear);
+		p5.add(jbtBigPlus);
+		p5.add(jbtBigMinus);
+		p5.add(jbtBigMultiplication);
+		p5.add(jbtBigDivision);
+		p5.add(jbtBigEqual);
+		
+		/////////////////////////////////////////////////////////////
+		
+		jtaDisplayArea.setEditable(false);
+		jtaDisplayArea.setBackground(Color.WHITE);
+		jtaDisplayArea.setFont(new Font("Dialog", Font.BOLD, 30));
+		jtaDisplayArea.setLineWrap(true);
+		jtaDisplayArea.setWrapStyleWord(false);
+		
+		JScrollPane jspDisplayArea = new JScrollPane(jtaDisplayArea);
+		jspDisplayArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		/////////////////////////////////////////////////////////////
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 	    	public void windowOpened(WindowEvent wa) {
@@ -229,23 +293,53 @@ public class Calculator extends JFrame {
 		jmiStandard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().invalidate();
+				
 				setLayout(new BorderLayout());
 				setSize(300, 350);
 				setTitle("Standard Calculator");
 				add(p1, BorderLayout.NORTH);
 				add(p2, BorderLayout.CENTER);
+				
+				getContentPane().revalidate();
+				repaint();
 			}
 		});
 
 		jmiAdvanced.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().invalidate();
+				
 				setLayout(new BorderLayout());
 				setSize(650,350);
 				setTitle("Advanced Calculator");
 				add(p1, BorderLayout.NORTH);
 				add(p2, BorderLayout.EAST);
 				add(p3, BorderLayout.WEST);
+				
+				getContentPane().revalidate();
+				repaint();
+			}
+		});
+		
+		jmiBigNumber.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().invalidate();
+				
+				setLayout(new BorderLayout());
+				setSize(650,350);
+				setTitle("Big Number Calculator (BETA)");
+				add(p4, BorderLayout.SOUTH);
+				add(p5, BorderLayout.EAST);
+				add(jtaDisplayArea, BorderLayout.CENTER);
+				
+				getContentPane().revalidate();
+				repaint();
 			}
 		});
 		
@@ -310,9 +404,28 @@ public class Calculator extends JFrame {
 		jbtFloor.addActionListener(buttons);
 		jbtPi.addActionListener(buttons);
 		jbtFactorial.addActionListener(buttons);
+		
+		jbtBigPlus.addActionListener(buttons);
+		jbtBigMinus.addActionListener(buttons);
+		jbtBigMultiplication.addActionListener(buttons);
+		jbtBigDivision.addActionListener(buttons);
+		
+		jbtBigZero.addActionListener(buttons);
+		jbtBigOne.addActionListener(buttons);
+		jbtBigTwo.addActionListener(buttons);
+		jbtBigThree.addActionListener(buttons);
+		jbtBigFour.addActionListener(buttons);
+		jbtBigFive.addActionListener(buttons);
+		jbtBigSix.addActionListener(buttons);
+		jbtBigSeven.addActionListener(buttons);
+		jbtBigEight.addActionListener(buttons);
+		jbtBigNine.addActionListener(buttons);
+		
+		jbtBigEqual.addActionListener(buttons);
+		jbtBigClear.addActionListener(buttons);
 	}
 	
-	enum Operator {NONE, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO, LOG, XY};
+	enum Operator {NONE, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO, LOG, XY, BIGPLUS, BIGMINUS, BIGMULTIPLICATION, BIGDIVISION};
 	
 	public class ButtonListener implements ActionListener {
 		@Override
@@ -546,7 +659,7 @@ public class Calculator extends JFrame {
 			else if (e.getSource() == jbtEqual) {
 				if (getTemp() == 0)
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
-				
+					
 				switch(getOperator()) {
 					case PLUS:
 						setAnswer((getAnswer() + getTemp()));
@@ -571,7 +684,7 @@ public class Calculator extends JFrame {
 						break;
 					default:
 				}
-				
+						
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
@@ -714,10 +827,164 @@ public class Calculator extends JFrame {
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			else if (e.getSource() == jbtBigZero) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "0");	
+				}
+			}
+			else if (e.getSource() == jbtBigOne) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "1");	
+				}
+				else
+					jtaDisplayArea.setText("1");
+			}
+			else if (e.getSource() == jbtBigTwo) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "2");	
+				}
+				else
+					jtaDisplayArea.setText("2");
+			}	
+			else if (e.getSource() == jbtBigThree) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "3");	
+				}
+				else
+					jtaDisplayArea.setText("3");
+			}
+			else if (e.getSource() == jbtBigFour) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "4");	
+				}
+				else
+					jtaDisplayArea.setText("4");
+			}
+			else if (e.getSource() == jbtBigFive) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "5");	
+				}
+				else
+					jtaDisplayArea.setText("5");
+			}
+			else if (e.getSource() == jbtBigSix) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "6");	
+				}
+				else
+					jtaDisplayArea.setText("6");
+			}
+			else if (e.getSource() == jbtBigSeven) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "7");	
+				}
+				else
+					jtaDisplayArea.setText("7");
+			}	
+			else if (e.getSource() == jbtBigEight) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "8");	
+				}
+				else
+					jtaDisplayArea.setText("8");
+			}
+			else if (e.getSource() == jbtBigNine) {
+				if (jtaDisplayArea.getText().equals("0") == false) {
+					jtaDisplayArea.setText(jtaDisplayArea.getText() + "9");	
+				}
+				else
+					jtaDisplayArea.setText("9");
+			}
+			else if (e.getSource() == jbtBigPlus) {
+				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
+					bigTemp = numberToArray(jtaDisplayArea.getText());
+					jtaDisplayArea.setText("0");
+				}
+				setOperator(Operator.BIGPLUS);
+				disableBigOperatorButtons();
+				jbtBigEqual.setEnabled(true);
+			}	
+			else if (e.getSource() == jbtBigMinus) {
+				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
+					bigTemp = numberToArray(jtaDisplayArea.getText());
+					jtaDisplayArea.setText("0");
+				}
+				
+				setOperator(Operator.BIGMINUS);
+				disableBigOperatorButtons();
+				jbtBigEqual.setEnabled(true);
+			}
+			else if (e.getSource() == jbtBigMultiplication) {
+				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
+					bigTemp = numberToArray(jtaDisplayArea.getText());
+					jtaDisplayArea.setText("0");
+				}
+				
+				setOperator(Operator.BIGMULTIPLICATION);
+				disableBigOperatorButtons();
+				jbtBigEqual.setEnabled(true);
+			}
+			else if (e.getSource() == jbtBigDivision) {
+				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
+					bigTemp = numberToArray(jtaDisplayArea.getText());
+					jtaDisplayArea.setText("0");
+				}
+				
+				setOperator(Operator.BIGDIVISION);
+				disableBigOperatorButtons();
+				jbtBigEqual.setEnabled(true);
+			}
+			else if (e.getSource() == jbtBigEqual) {
+				int[] bigTemp2 = numberToArray(jtaDisplayArea.getText());
+					switch(getOperator()) {
+						case BIGPLUS:
+							jtaDisplayArea.setText(arrayToString(plus(bigTemp, bigTemp2)));
+							break;
+						case BIGMINUS:
+							jtaDisplayArea.setText(arrayToString(minus(bigTemp, bigTemp2)));
+							break;
+						case BIGMULTIPLICATION:
+							jtaDisplayArea.setText(arrayToString(multiply(bigTemp, bigTemp2)));
+							break;
+						case BIGDIVISION:
+							jtaDisplayArea.setText(divide(bigTemp, bigTemp2));
+							break;
+						default:
+					}
+					setOperator(Operator.NONE);
+					disableBigNumberButtons();
+					jbtBigEqual.setEnabled(false);
+					bigTemp = new int[] {0};
+			}
+			else if (e.getSource() == jbtBigClear) {
+				jtaDisplayArea.setText("0");
+				
+				setOperator(Operator.NONE);
+				bigTemp = new int[] {0};
+				
+				jbtBigZero.setEnabled(true);
+				jbtBigOne.setEnabled(true);
+				jbtBigTwo.setEnabled(true);
+				jbtBigThree.setEnabled(true);
+				jbtBigFour.setEnabled(true);
+				jbtBigFive.setEnabled(true);
+				jbtBigSix.setEnabled(true);
+				jbtBigSeven.setEnabled(true);
+				jbtBigEight.setEnabled(true);
+				jbtBigNine.setEnabled(true);
+				
+				jbtBigPlus.setEnabled(true);
+				jbtBigMinus.setEnabled(true);
+				jbtBigMultiplication.setEnabled(true);
+				jbtBigDivision.setEnabled(true);
+				
+				jbtBigEqual.setEnabled(false);
+			}
 		}
 		private double answer = 0;
 		private double memory = 0;
 		private double temp = 0;
+		int[] bigTemp = {0};
 
 		private Operator operator;
 		
@@ -774,9 +1041,9 @@ public class Calculator extends JFrame {
 		}
 		
 		public void setFontSize() {
-			int length = 9;
-			int textLength = jtfDisplayArea.getText().length();
-			
+				int length = 9;
+				int textLength = jtfDisplayArea.getText().length();
+				
 			switch(getWidth()) {
 				case 300:
 					length = 9;
@@ -784,9 +1051,9 @@ public class Calculator extends JFrame {
 				case 650:
 					length = 30;
 			}
-			
+				
 			if (jtfDisplayArea.getText().length() > length ) 
-				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35 - ((textLength - length))));
+					jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35 - ((textLength - length))));
 
 			else
 				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
@@ -797,6 +1064,195 @@ public class Calculator extends JFrame {
 				return 1;
 			else
 				return n * factorial(n - 1);
+		}
+		
+		public int[] numberToArray(String number) {
+			int length = (int)Math.ceil((double)number.length() / 4);
+			int[] bigNumber = new int[length];
+			
+			String temp;
+			
+			for (int i = 1; i <= length; i++) {
+				if ( i == 0)
+					temp = number.substring(number.length() - 4 * i);
+				else if (number.length() - 4 * i < 0)
+					temp = number.substring(0, number.length() - 4 * (i - 1));
+				else
+					temp = number.substring(number.length() - 4 * i, number.length() - 4 * (i - 1));
+				
+				bigNumber[length - i] = Integer.parseInt(temp);
+			}
+			
+			return bigNumber;
+		}
+		
+		public int[] plus(int[] bigNumber1, int[] bigNumber2) {
+			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length + 1 : bigNumber2.length + 1;
+			int[] sum = new int[length];
+			int[] bigNum1 = new int[length];
+			int[] bigNum2 = new int[length];
+			
+			System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+			System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
+
+			for (int i = 0; i < length; i++)
+				sum[i] = bigNum1[i] + bigNum2[i];
+				
+			for (int j = 1; j < length; j++) {
+				sum[length - j - 1] += sum[length - j] / 10000;
+				sum[length - j] %= 10000;
+			}
+			
+			return sum;
+		}
+		
+		public int[] minus(int[] bigNumber1, int[] bigNumber2) {
+			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
+			int[] difference = new int[length];
+			int[] big = new int[length];
+			int[] small = new int[length];
+			
+			boolean bigger = isBiggerOrEquals(bigNumber1, bigNumber2);
+			
+			if (bigger) {
+				System.arraycopy(bigNumber1, 0, big, length - bigNumber1.length, bigNumber1.length);
+				System.arraycopy(bigNumber2, 0, small, length - bigNumber2.length, bigNumber2.length);
+			}
+			else {
+				System.arraycopy(bigNumber1, 0, small, length - bigNumber1.length, bigNumber1.length);
+				System.arraycopy(bigNumber2, 0, big, length - bigNumber2.length, bigNumber2.length);
+			}
+			
+			for (int i = 0; i < length; i++)
+				difference[i] = big[i] - small[i];
+				
+			for (int j = 1; j < length; j++) {
+				if (difference[length - j] < 0) {
+					difference[length - j - 1]--;
+					difference[length - j] += 10000;
+				}
+			}
+			
+			if (bigger == false) {
+				difference[0] = -difference[0];
+			}
+			
+			return difference;
+		}
+		
+		public int[] multiply(int[] bigNumber1, int[] bigNumber2) {
+			int length = bigNumber1.length * bigNumber2.length;
+			int[] product = new int[length];
+			int[] bigNum1 = new int[length];
+			int[] bigNum2 = new int[length];
+			
+			System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+			System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
+			
+			for (int i = 0; i < length; i++) {
+				for (int j = 0; j < length; j++) {
+					if (i + j < length)
+						product[i + j] += bigNum1[i] * bigNum2[j];
+				}
+			}
+			
+			for (int k = 1; k < length; k++) {
+				product[length - k - 1] += product[length - k] / 10000;
+				product[length - k] %= 10000;
+			}
+			
+			return product;
+		}
+		
+		public boolean isBiggerOrEquals(int[] bigNumber1, int[] bigNumber2) {
+			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
+			int[] bigNum1 = new int[length];
+			int[] bigNum2 = new int[length];
+			
+			System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+			System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
+			
+			boolean iboe = false;
+			
+			for (int i = 0; i < length; i++) {
+				if(bigNum1[i] > bigNum2[i]) {
+					iboe = true;
+					break;
+				}
+			}
+			
+			if (Arrays.equals(bigNum1, bigNum2))
+				iboe = true;
+			
+			return iboe;
+		}
+		
+		public  int[] plusInteger(int[] bigNumber, int n) {
+			int length = bigNumber.length + 1;
+			int[] bigNum = new int[length];
+			
+			System.arraycopy(bigNumber, 0, bigNum, length - bigNumber.length, bigNumber.length);
+				
+			bigNum[length - 1] = bigNum[length - 1] + n;
+			
+			for (int j = 1; j < length; j++) {
+				bigNum[length - j - 1] += bigNum[length - j] / 10000;
+				bigNum[length - j] %= 10000;
+			}
+			
+			return bigNum;
+		}
+		
+		public String divide(int[] bigNumber1, int[] bigNumber2) {
+			int length = bigNumber1.length;
+			int[] quotient = new int[length];
+			int[] remainder = new int[length];
+			int[] temp;
+			
+			System.arraycopy(bigNumber1, 0, remainder, 0, bigNumber1.length);
+
+			while(isBiggerOrEquals(remainder, bigNumber2)) {
+				temp = minus(remainder, bigNumber2);
+				if (temp[0] < 0)
+					break;
+				
+				System.arraycopy(temp, 0, remainder, length - temp.length, temp.length);
+				quotient = plusInteger(quotient, 1);
+			}
+			
+			return arrayToString(quotient) + "\n..." + arrayToString(remainder);
+		}
+		
+		public String arrayToString(int[] bigNumber) {
+			String result = "";
+			
+			for(int i = 0; i < bigNumber.length; i++)
+				result += String.valueOf(bigNumber[i]);
+			
+			while (result.charAt(0) == '0')
+				result = result.substring(1);
+			
+			return result;
+		}
+		
+		public void disableBigNumberButtons() {
+			jbtBigZero.setEnabled(false);
+			jbtBigOne.setEnabled(false);
+			jbtBigTwo.setEnabled(false);
+			jbtBigThree.setEnabled(false);
+			jbtBigFour.setEnabled(false);
+			jbtBigFive.setEnabled(false);
+			jbtBigSix.setEnabled(false);
+			jbtBigSeven.setEnabled(false);
+			jbtBigEight.setEnabled(false);
+			jbtBigNine.setEnabled(false);
+		}
+		
+		public void disableBigOperatorButtons() {
+			jbtBigPlus.setEnabled(false);
+			jbtBigMinus.setEnabled(false);
+			jbtBigMultiplication.setEnabled(false);
+			jbtBigDivision.setEnabled(false);
 		}
 	}
 	

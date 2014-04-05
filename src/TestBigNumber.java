@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class TestBigNumber {
 	public static void main (String[] args) {
@@ -10,7 +11,7 @@ public class TestBigNumber {
 		System.out.print("Enter the second number: ");
 		String number2 = input.nextLine();
 		
-		String answer = arrayToString(minus(numberToArray(number1), numberToArray(number2)));
+		String answer = arrayToString(divide(numberToArray(number1), numberToArray(number2)));
 		//boolean answer = isBiggerOrEquals(numberToArray(number1), numberToArray(number2));
 		
 		System.out.println("The answer is: ");
@@ -123,12 +124,17 @@ public class TestBigNumber {
 		System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
 		System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
 		
-		boolean iboe = true;
+		boolean iboe = false;
 		
 		for (int i = 0; i < length; i++) {
-			if(bigNum1[i] < bigNum2[i])
-				iboe = false;
-		}	
+			if(bigNum1[i] > bigNum2[i]) {
+				iboe = true;
+				break;
+			}
+		}
+		
+		if (Arrays.equals(bigNum1, bigNum2))
+			iboe = true;
 		
 		return iboe;
 	}
@@ -153,11 +159,16 @@ public class TestBigNumber {
 		int length = bigNumber1.length;
 		int[] quotient = new int[length];
 		int[] remainder = new int[length];
+		int[] temp;
 		
 		System.arraycopy(bigNumber1, 0, remainder, 0, bigNumber1.length);
 
 		while(isBiggerOrEquals(remainder, bigNumber2)) {
-			remainder = minus(remainder, bigNumber2);
+			temp = minus(remainder, bigNumber2);
+			if (temp[0] < 0)
+				break;
+			
+			System.arraycopy(temp, 0, remainder, length - temp.length, temp.length);
 			quotient = addInteger(quotient, 1);
 		}
 		
@@ -170,9 +181,12 @@ public class TestBigNumber {
 		for(int i = 0; i < bigNumber.length; i++)
 			result += String.valueOf(bigNumber[i]);
 		
-		while (result.charAt(0) == '0')
+		while (result.charAt(0) == '0') {
+			if (result.length() < 2)
+				break;
+			
 			result = result.substring(1);
-		
+		}
 		return result;
 	}
 }
