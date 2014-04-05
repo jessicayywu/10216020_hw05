@@ -343,6 +343,26 @@ public class Calculator extends JFrame {
 			}
 		});
 		
+		jmiViewHelp.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		
+		jmiAbout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String about = "Calculator\n"
+						+ "-----------------------------------------------------------------\n"
+						+ "  - Standard\n  - Advanced\n  - Big Number BETA\n\n"
+						+ "-----------------------------------------------------------------\n"
+						+ "By\n        Yen-Yi Wu\n\n        Department of Computer Science,\n        University of Taipei,\n        Taiwan\n"
+						+ "-----------------------------------------------------------------\n"
+						+ "                                                                 April, 2014";
+				JOptionPane.showMessageDialog(null, about, "About", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		/////////////////////////////////////////////////////////////
 		
 		ButtonListener buttons = new ButtonListener(); 
