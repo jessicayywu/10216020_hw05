@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -8,7 +10,14 @@ public class Calculator extends JFrame {
 	
 	private JLabel jlPassword = new JLabel("Password: ");
 	private JPasswordField jpfPassword = new JPasswordField(12);
-	private JButton jbtEnter = new JButton("Enter");	
+	private JButton jbtEnter = new JButton("Enter");
+	
+	private JLabel jlNoPassword = new JLabel("Please Set Your Password.");
+	private JLabel jlSetPassword = new JLabel("New Password: ");
+	private JPasswordField jpfSetPassword = new JPasswordField(12);
+	private JLabel jlCheckPassword = new JLabel("Enter Again: ");
+	private JPasswordField jpfCheckPassword = new JPasswordField(12);
+	private JButton jbtOK = new JButton("OK");
 	
 	JMenuItem jmiStandard = new JMenuItem("Standard", 'S');
 	JMenuItem jmiAdvanced = new JMenuItem("Advanced", 'A');
@@ -124,17 +133,73 @@ public class Calculator extends JFrame {
 	    	}
 	    });
 	    
-		
 		jbtEnter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(new String(jpfPassword.getPassword()).equals("0000"))
-					jdPassword.dispose();
-				else
-					JOptionPane.showMessageDialog(null, "Wrong Password.", "Error", JOptionPane.ERROR_MESSAGE);
+				java.io.File file = new java.io.File("password.txt");
+				Scanner readFile;
+				try {
+					readFile = new Scanner(file);
+					String password = readFile.nextLine();
+					if(new String(jpfPassword.getPassword()).equals(password))
+						jdPassword.dispose();
+					else
+						JOptionPane.showMessageDialog(null, "Wrong Password.", "Error", JOptionPane.ERROR_MESSAGE);
+					readFile.close();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		
+		final JDialog jdSetPassword = new JDialog((Frame)null, "Set Password", true);
+		JPanel p03 = new JPanel(new BorderLayout());
+		p03.add(jlSetPassword, BorderLayout.WEST);
+		p03.add(jpfSetPassword, BorderLayout.CENTER);
+		
+		JPanel p04 = new JPanel(new BorderLayout());
+		p04.add(jlCheckPassword, BorderLayout.WEST);
+		p04.add(jpfCheckPassword, BorderLayout.CENTER);
+		
+		JPanel p05 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		p05.add(jbtOK);
+		
+		jdSetPassword.setLayout(new GridLayout(4, 1, 5, 5));
+		jdSetPassword.add(jlNoPassword);
+		jdSetPassword.add(p03);
+		jdSetPassword.add(p04);
+		jdSetPassword.add(p05);
+		jdSetPassword.setSize(250, 200);
+		jdSetPassword.setLocationRelativeTo(null);
+		
+		jdSetPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);	
+		
+		jdSetPassword.addWindowListener(new WindowAdapter() {
+	    	public void windowClosing(WindowEvent we) {
+	    		System.exit(0);
+	    	}
+	    });
+	    
+		jbtOK.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				java.io.File file = new java.io.File("password.txt");
+				java.io.PrintWriter writeFile;
+				try {
+					if (new String(jpfSetPassword.getPassword()).equals(new String(jpfCheckPassword.getPassword()))) {
+						writeFile = new java.io.PrintWriter(file);
+						String password = new String(jpfSetPassword.getPassword());
+						writeFile.print(password);
+						writeFile.close();
+						jdSetPassword.dispose();
+					}
+					else 
+						JOptionPane.showMessageDialog(null, "Check your password again.", "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}			
+			}
+		});
 		
 		
 		JMenuBar jmb = new JMenuBar();
@@ -279,7 +344,12 @@ public class Calculator extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 	    	public void windowOpened(WindowEvent wa) {
-				jdPassword.setVisible(true);
+				java.io.File file = new java.io.File("password.txt");
+				
+				if (file.exists())
+					jdPassword.setVisible(true);
+				else
+					jdSetPassword.setVisible(true);
 	    	}
 	    });
 		
