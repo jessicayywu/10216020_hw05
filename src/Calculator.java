@@ -4,12 +4,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Calculator extends JFrame {	
-	/**
+	
 	private JLabel jlInput = new JLabel("Input Password:");
 	private JPasswordField jpfPassword = new JPasswordField();
-	private JButton jbtEnter = new JButton("Enter");
-	*/
-	
+	private JButton jbtEnter = new JButton("Enter");	
 	
 	JMenuItem jmiStandard = new JMenuItem("Standard", 'S');
 	JMenuItem jmiAdvanced = new JMenuItem("Advanced", 'A');
@@ -79,16 +77,15 @@ public class Calculator extends JFrame {
 	private JButton jbtFactorial = new JButton("n!");
 
 	public Calculator() {
-		/**
-		final JDialog jdPassword = new JDialog((Frame)null, "Password", true);
-		jdPassword.setLayout(new BorderLayout());
-		jdPassword.setSize(200, 200);
-		jdPassword.add(jlInput, BorderLayout.NORTH);
-		jdPassword.add(jpfPassword, BorderLayout.CENTER);
-		jdPassword.add(jbtEnter, BorderLayout.SOUTH);
-		jdPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		jdPassword.setVisible(true);
 		
+		final JDialog jdPassword = new JDialog((Frame)null, "Password", true);
+		jdPassword.setLayout(new GridLayout(3, 1, 5, 5));
+		jdPassword.setSize(200, 150);
+		jdPassword.setLocationRelativeTo(null);
+		jdPassword.add(jlInput);
+		jdPassword.add(jpfPassword);
+		jdPassword.add(jbtEnter);
+		jdPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);		
 		
 		jdPassword.addWindowListener(new WindowAdapter() {
 	    	public void windowClosing(WindowEvent we) {
@@ -103,7 +100,7 @@ public class Calculator extends JFrame {
 				jdPassword.dispose();
 			}
 		});
-		*/
+		
 		
 		
 		JMenuBar jmb = new JMenuBar();
@@ -204,6 +201,13 @@ public class Calculator extends JFrame {
 		p3.add(jbtFactorial);
 		
 		/////////////////////////////////////////////////////////////
+		addWindowListener(new WindowAdapter() {
+			@Override
+	    	public void windowOpened(WindowEvent wa) {
+				jdPassword.setVisible(true);
+	    	}
+	    });
+		
 		setLayout(new BorderLayout());
 		setSize(300, 350);
 		setTitle("Standard Calculator");
@@ -235,6 +239,7 @@ public class Calculator extends JFrame {
 		});
 		
 		/////////////////////////////////////////////////////////////
+		
 		ButtonListener buttons = new ButtonListener(); 
 		
 		jbtClear.addActionListener(buttons);
@@ -789,35 +794,5 @@ public class Calculator extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
-		JLabel jlInput = new JLabel("Input Password:");
-		JPasswordField jpfPassword = new JPasswordField();
-		JButton jbtEnter = new JButton("Enter");
-		
-		final JDialog jdPassword = new JDialog(frame, "Password", true);
-		jdPassword.setLayout(new GridLayout(3, 1));
-		jdPassword.setSize(200, 100);
-		jdPassword.add(jlInput);
-		jdPassword.add(jpfPassword);
-		jdPassword.add(jbtEnter);
-		jdPassword.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		jdPassword.setVisible(true);
-		
-		
-		jdPassword.addWindowListener(new WindowAdapter() {
-	    	public void windowClosing(WindowEvent we) {
-	    		System.exit(1);
-	    	}
-	    });
-	    
-	    
-		
-		jbtEnter.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				jdPassword.setVisible(false);
-				jdPassword.dispose();
-			}
-		});
 	}
 }

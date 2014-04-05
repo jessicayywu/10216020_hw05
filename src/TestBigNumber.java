@@ -10,32 +10,11 @@ public class TestBigNumber {
 		System.out.print("Enter the second number: ");
 		String number2 = input.nextLine();
 		
-		String sum = arrayToString(add(numberToArray(number1), numberToArray(number2)));
+		String answer = arrayToString(minus(numberToArray(number1), numberToArray(number2)));
+		//boolean answer = isBiggerOrEquals(numberToArray(number1), numberToArray(number2));
 		
-		System.out.println("The sum is: ");
-		System.out.println(sum);
-		
-		System.out.print("Enter the first number: ");
-		String number3 = input.nextLine();
-		
-		System.out.print("Enter the second number: ");
-		String number4 = input.nextLine();
-		
-		String product = arrayToString(multiply(numberToArray(number3), numberToArray(number4)));
-		
-		System.out.println("The product is: ");
-		System.out.println(product);
-		
-		System.out.print("Enter the first number: ");
-		String number5 = input.nextLine();
-		
-		System.out.print("Enter the second number: ");
-		String number6 = input.nextLine();
-		
-		String difference = arrayToString(minus(numberToArray(number5), numberToArray(number6)));
-		
-		System.out.println("The difference is: ");
-		System.out.println(difference);
+		System.out.println("The answer is: ");
+		System.out.println(answer);
 	}
 	
 	public static int[] numberToArray(String number) {
@@ -64,12 +43,9 @@ public class TestBigNumber {
 		int[] bigNum1 = new int[length];
 		int[] bigNum2 = new int[length];
 		
-		for(int m = 1; m <= bigNumber1.length; m++)
-			bigNum1[bigNum1.length - m] = bigNumber1[bigNumber1.length - m];
-			
-		for(int n = 1; n <= bigNumber2.length; n++)
-			bigNum2[bigNum2.length - n] = bigNumber2[bigNumber2.length - n];
-		
+		System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+		System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
+
 		for (int i = 0; i < length; i++)
 			sum[i] = bigNum1[i] + bigNum2[i];
 			
@@ -84,23 +60,32 @@ public class TestBigNumber {
 	public static int[] minus(int[] bigNumber1, int[] bigNumber2) {
 		int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
 		int[] difference = new int[length];
-		int[] bigNum1 = new int[length];
-		int[] bigNum2 = new int[length];
+		int[] big = new int[length];
+		int[] small = new int[length];
 		
-		for(int m = 1; m <= bigNumber1.length; m++)
-			bigNum1[bigNum1.length - m] = bigNumber1[bigNumber1.length - m];
-	
-		for(int n = 1; n <= bigNumber2.length; n++)
-			bigNum2[bigNum2.length - n] = bigNumber2[bigNumber2.length - n];
+		boolean bigger = isBiggerOrEquals(bigNumber1, bigNumber2);
+		
+		if (bigger) {
+			System.arraycopy(bigNumber1, 0, big, length - bigNumber1.length, bigNumber1.length);
+			System.arraycopy(bigNumber2, 0, small, length - bigNumber2.length, bigNumber2.length);
+		}
+		else {
+			System.arraycopy(bigNumber1, 0, small, length - bigNumber1.length, bigNumber1.length);
+			System.arraycopy(bigNumber2, 0, big, length - bigNumber2.length, bigNumber2.length);
+		}
 		
 		for (int i = 0; i < length; i++)
-			difference[i] = bigNum1[i] - bigNum2[i];
+			difference[i] = big[i] - small[i];
 			
 		for (int j = 1; j < length; j++) {
-			if (difference[j] < 0) {
-				difference[j + 1] -= 1000;
-				difference[j] += 10000;
+			if (difference[length - j] < 0) {
+				difference[length - j - 1]--;
+				difference[length - j] += 10000;
 			}
+		}
+		
+		if (bigger == false) {
+			difference[0] = -difference[0];
 		}
 		
 		return difference;
@@ -112,11 +97,8 @@ public class TestBigNumber {
 		int[] bigNum1 = new int[length];
 		int[] bigNum2 = new int[length];
 		
-		for(int m = 1; m <= bigNumber1.length; m++)
-			bigNum1[bigNum1.length - m] = bigNumber1[bigNumber1.length - m];
-			
-		for(int n = 1; n <= bigNumber2.length; n++)
-			bigNum2[bigNum2.length - n] = bigNumber2[bigNumber2.length - n];
+		System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+		System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
 		
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < length; j++) {
@@ -133,13 +115,62 @@ public class TestBigNumber {
 		return product;
 	}
 	
+	public static boolean isBiggerOrEquals(int[] bigNumber1, int[] bigNumber2) {
+		int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
+		int[] bigNum1 = new int[length];
+		int[] bigNum2 = new int[length];
+		
+		System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+		System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
+		
+		boolean iboe = true;
+		
+		for (int i = 0; i < length; i++) {
+			if(bigNum1[i] < bigNum2[i])
+				iboe = false;
+		}	
+		
+		return iboe;
+	}
+	
+	public static int[] addInteger(int[] bigNumber, int n) {
+		int length = bigNumber.length + 1;
+		int[] bigNum = new int[length];
+		
+		System.arraycopy(bigNumber, 0, bigNum, length - bigNumber.length, bigNumber.length);
+			
+		bigNum[length - 1] = bigNum[length - 1] + n;
+		
+		for (int j = 1; j < length; j++) {
+			bigNum[length - j - 1] += bigNum[length - j] / 10000;
+			bigNum[length - j] %= 10000;
+		}
+		
+		return bigNum;
+	}
+	
+	public static int[] divide(int[] bigNumber1, int[] bigNumber2) {
+		int length = bigNumber1.length;
+		int[] quotient = new int[length];
+		int[] remainder = new int[length];
+		
+		System.arraycopy(bigNumber1, 0, remainder, 0, bigNumber1.length);
+
+		while(isBiggerOrEquals(remainder, bigNumber2)) {
+			remainder = minus(remainder, bigNumber2);
+			quotient = addInteger(quotient, 1);
+		}
+		
+		return quotient;
+	}
+	
 	public static String arrayToString(int[] bigNumber) {
 		String result = "";
 		
 		for(int i = 0; i < bigNumber.length; i++)
 			result += String.valueOf(bigNumber[i]);
 		
-		if (result.charAt(0) == '0')
+		while (result.charAt(0) == '0')
 			result = result.substring(1);
 		
 		return result;
