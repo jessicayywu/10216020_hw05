@@ -5,8 +5,8 @@ import javax.swing.*;
 
 public class Calculator extends JFrame {	
 	
-	private JLabel jlInput = new JLabel("Input Password:");
-	private JPasswordField jpfPassword = new JPasswordField();
+	private JLabel jlPassword = new JLabel("Password: ");
+	private JPasswordField jpfPassword = new JPasswordField(12);
 	private JButton jbtEnter = new JButton("Enter");	
 	
 	JMenuItem jmiStandard = new JMenuItem("Standard", 'S');
@@ -79,12 +79,20 @@ public class Calculator extends JFrame {
 	public Calculator() {
 		
 		final JDialog jdPassword = new JDialog((Frame)null, "Password", true);
-		jdPassword.setLayout(new GridLayout(3, 1, 5, 5));
-		jdPassword.setSize(200, 150);
+		JPanel p01 = new JPanel(new BorderLayout());
+		p01.add(jlPassword, BorderLayout.WEST);
+		p01.add(jpfPassword, BorderLayout.CENTER);
+		
+		JPanel p02 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		p02.add(jbtEnter);
+		
+		jdPassword.setLayout(new GridLayout(2, 1, 5, 5));
+		jdPassword.add(p01);
+		jdPassword.add(p02);
+		jdPassword.setSize(250, 120);
 		jdPassword.setLocationRelativeTo(null);
-		jdPassword.add(jlInput);
-		jdPassword.add(jpfPassword);
-		jdPassword.add(jbtEnter);
+
+		
 		jdPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);		
 		
 		jdPassword.addWindowListener(new WindowAdapter() {
@@ -97,7 +105,10 @@ public class Calculator extends JFrame {
 		jbtEnter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jdPassword.dispose();
+				if(new String(jpfPassword.getPassword()).equals("0000"))
+					jdPassword.dispose();
+				else
+					JOptionPane.showMessageDialog(null, "Wrong Password.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
