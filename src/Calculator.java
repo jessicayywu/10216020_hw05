@@ -1348,7 +1348,7 @@ public class Calculator extends JFrame {
 		}
 		
 		public int[] multiply(int[] bigNumber1, int[] bigNumber2) {
-			int length = bigNumber1.length * bigNumber2.length;
+			int length = bigNumber1.length + bigNumber2.length;
 			int[] product = new int[length];
 			int[] bigNum1 = new int[length];
 			int[] bigNum2 = new int[length];
@@ -1358,8 +1358,8 @@ public class Calculator extends JFrame {
 			
 			for (int i = 0; i < length; i++) {
 				for (int j = 0; j < length; j++) {
-					if (i + j < length)
-						product[i + j] += bigNum1[i] * bigNum2[j];
+					if (i + j > length - 2)
+						product[i + j - length + 1] += bigNum1[i] * bigNum2[j];
 				}
 			}
 			
