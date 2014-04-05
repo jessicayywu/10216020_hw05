@@ -107,6 +107,39 @@ public class Calculator extends JFrame {
 	
 	private JButton jbtBigEqual = new JButton("=");
 	private JButton jbtBigClear = new JButton("Clear");
+	
+	
+	String encode(String string) {
+		char[] characters = new char[string.length()];
+		char temp;
+		
+		for (int i = 0; i < characters.length; i++)
+			characters[i] = (char) (string.charAt(i) + string.length());
+		
+		for (int j = 0; j < characters.length; j++) {
+			temp = characters[j];
+			characters[j] = characters[characters.length - j -1];
+			characters[characters.length - j -1] = temp;
+		}			
+		
+		return string = new String(characters);
+	}
+	
+	String decode(String string) {
+		char[] characters = new char[string.length()];
+		char temp;
+		
+		for (int i = 0; i < characters.length; i++)
+			characters[i] = (char) (string.charAt(i) - string.length());
+		
+		for (int j = 0; j < characters.length; j++) {
+			temp = characters[j];
+			characters[j] = characters[characters.length - j -1];
+			characters[characters.length - j -1] = temp;
+		}	
+		
+		return string = new String(characters);
+	}
 
 	public Calculator() {
 		
@@ -140,7 +173,7 @@ public class Calculator extends JFrame {
 				Scanner readFile;
 				try {
 					readFile = new Scanner(file);
-					String password = readFile.nextLine();
+					String password = decode(readFile.nextLine());
 					if(new String(jpfPassword.getPassword()).equals(password))
 						jdPassword.dispose();
 					else
@@ -151,6 +184,8 @@ public class Calculator extends JFrame {
 				}
 			}
 		});
+		
+		/////////////////////////////////////////////////////////////
 		
 		final JDialog jdSetPassword = new JDialog((Frame)null, "Set Password", true);
 		JPanel p03 = new JPanel(new BorderLayout());
@@ -188,7 +223,7 @@ public class Calculator extends JFrame {
 				try {
 					if (new String(jpfSetPassword.getPassword()).equals(new String(jpfCheckPassword.getPassword()))) {
 						writeFile = new java.io.PrintWriter(file);
-						String password = new String(jpfSetPassword.getPassword());
+						String password = encode(new String(jpfSetPassword.getPassword()));
 						writeFile.print(password);
 						writeFile.close();
 						jdSetPassword.dispose();
@@ -201,6 +236,7 @@ public class Calculator extends JFrame {
 			}
 		});
 		
+		/////////////////////////////////////////////////////////////
 		
 		JMenuBar jmb = new JMenuBar();
 		setJMenuBar(jmb);
@@ -220,6 +256,7 @@ public class Calculator extends JFrame {
 		helpMenu.add(jmiViewHelp);
 		helpMenu.addSeparator();
 		helpMenu.add(jmiAbout);
+		
 		/////////////////////////////////////////////////////////////
 		
 		final JPanel p1 = new JPanel(new BorderLayout());
@@ -233,6 +270,7 @@ public class Calculator extends JFrame {
 		jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
 		jtfDisplayArea.setHorizontalAlignment(JTextField.RIGHT);
 		p1.add(jtfDisplayArea, BorderLayout.CENTER);
+		
 		/////////////////////////////////////////////////////////////
 		
 		final JPanel p2 = new JPanel(new GridLayout(5, 5, 6, 6));
@@ -266,6 +304,7 @@ public class Calculator extends JFrame {
 		p2.add(jbtDecimalPoint);
 		p2.add(jbtToggleSign);
 		p2.add(jbtEqual);
+		
 		/////////////////////////////////////////////////////////////
 		
 		final JPanel p3 = new JPanel(new GridLayout(5, 5, 6, 6));
@@ -433,6 +472,7 @@ public class Calculator extends JFrame {
 				JOptionPane.showMessageDialog(null, about, "About", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
+		
 		/////////////////////////////////////////////////////////////
 		
 		ButtonListener buttons = new ButtonListener(); 
@@ -467,6 +507,8 @@ public class Calculator extends JFrame {
 		jbtToggleSign.addActionListener(buttons);
 		jbtEqual.addActionListener(buttons);
 		
+		/////////////////////////////////////////////////////////////
+		
 		jbtSin.addActionListener(buttons);
 		jbtCos.addActionListener(buttons);
 		jbtTan.addActionListener(buttons);
@@ -494,6 +536,8 @@ public class Calculator extends JFrame {
 		jbtFloor.addActionListener(buttons);
 		jbtPi.addActionListener(buttons);
 		jbtFactorial.addActionListener(buttons);
+		
+		/////////////////////////////////////////////////////////////
 		
 		jbtBigPlus.addActionListener(buttons);
 		jbtBigMinus.addActionListener(buttons);
@@ -547,6 +591,7 @@ public class Calculator extends JFrame {
 				setOperator(Operator.PLUS);
 				setFontSize();
 			}	
+			
 			else if (e.getSource() == jbtMinus) {
 				if (getAnswer() != 0) {
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -561,6 +606,7 @@ public class Calculator extends JFrame {
 				setOperator(Operator.MINUS);
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtMultiplication) {
 				if (getAnswer() != 0) {
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -574,6 +620,7 @@ public class Calculator extends JFrame {
 				setOperator(Operator.MULTIPLICATION);
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtDivision) {
 				if (getAnswer() != 0) {
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -591,6 +638,7 @@ public class Calculator extends JFrame {
 			else if (e.getSource() == jbtMR) {
 				jtfDisplayArea.setText(answerToString(getMemory()));
 			}
+			
 			else if (e.getSource() == jbtMC) {
 				jtfDisplayArea.setText("0");
 				jlM.setText("");
@@ -600,6 +648,7 @@ public class Calculator extends JFrame {
 				setOperator(Operator.NONE);
 				setFontSize();
 			}	
+			
 			else if (e.getSource() == jbtMPlus) {
 				setMemory(getMemory() + Double.parseDouble(jtfDisplayArea.getText()));
 				jtfDisplayArea.setText("0");
@@ -607,6 +656,7 @@ public class Calculator extends JFrame {
 				setAnswer(0);
 				jlM.setText("M");
 			}
+			
 			else if (e.getSource() == jbtMMinus) {
 				setMemory(getMemory() - Double.parseDouble(jtfDisplayArea.getText()));
 				jtfDisplayArea.setText("0");
@@ -633,6 +683,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("1");
 				}
 			}
+			
 			else if (e.getSource() == jbtTwo) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -643,6 +694,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("2");
 				}
 			}	
+			
 			else if (e.getSource() == jbtThree) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -653,6 +705,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("3");
 				}
 			}
+			
 			else if (e.getSource() == jbtFour) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -663,6 +716,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("4");
 				}
 			}
+			
 			else if (e.getSource() == jbtFive) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -673,6 +727,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("5");
 				}
 			}
+			
 			else if (e.getSource() == jbtSix) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -683,6 +738,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("6");
 				}
 			}
+			
 			else if (e.getSource() == jbtSeven) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -693,6 +749,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("7");
 				}
 			}	
+			
 			else if (e.getSource() == jbtEight) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -703,6 +760,7 @@ public class Calculator extends JFrame {
 						jtfDisplayArea.setText("8");
 				}
 			}
+			
 			else if (e.getSource() == jbtNine) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
 					if (jtfDisplayArea.getText().equals("0") == false) {
@@ -719,6 +777,7 @@ public class Calculator extends JFrame {
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtModulo) {
 				if (getAnswer() != 0) {
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -732,12 +791,14 @@ public class Calculator extends JFrame {
 				setOperator(Operator.MODULO);
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtDecimalPoint) {
 				if(jtfDisplayArea.getText().indexOf('.') == -1) {
 					jtfDisplayArea.setText(jtfDisplayArea.getText() + ".");
 					setFontSize();
 				}
 			}
+			
 			else if (e.getSource() == jbtToggleSign) {
 				if (jtfDisplayArea.getText().equals("0") == false) {
 					if(jtfDisplayArea.getText().startsWith("-") == false)
@@ -746,6 +807,7 @@ public class Calculator extends JFrame {
 							jtfDisplayArea.setText(jtfDisplayArea.getText().substring(1));
 				}
 			}
+			
 			else if (e.getSource() == jbtEqual) {
 				if (getTemp() == 0)
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -778,76 +840,93 @@ public class Calculator extends JFrame {
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
+			/////////////////////////////////////////////////////////////
+			
 			else if (e.getSource() == jbtSin) {
 				setAnswer(Math.sin(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtCos) {
 				setAnswer(Math.cos(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtTan) {
 				setAnswer(Math.tan(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtCsc) {
 				setAnswer(1 / (Math.sin(Double.parseDouble(jtfDisplayArea.getText()))));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtSec) {
 				setAnswer(1 / (Math.cos(Double.parseDouble(jtfDisplayArea.getText()))));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtCot) {
 				setAnswer(1 / (Math.tan(Double.parseDouble(jtfDisplayArea.getText()))));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtAsin) {
 				setAnswer(Math.asin(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtAcos) {
 				setAnswer(Math.acos(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtAtan) {
 				setAnswer(Math.atan(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtSinh) {
 				setAnswer(Math.sinh(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtCosh) {
 				setAnswer(Math.cosh(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtTanh) {
 				setAnswer(Math.tanh(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtLn) {
 				setAnswer(Math.log(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtLog) {
 				setAnswer(Math.log10(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtLogxy) {
 				if (getAnswer() != 0) {
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -861,25 +940,30 @@ public class Calculator extends JFrame {
 				setOperator(Operator.LOG);
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtE) {
 				jtfDisplayArea.setText(answerToString(Math.E));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtEx) {
 				setAnswer(Math.exp(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtX2) {
 				setAnswer(Math.pow(Double.parseDouble(jtfDisplayArea.getText()), 2));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtX3) {
 				setAnswer(Math.pow(Double.parseDouble(jtfDisplayArea.getText()), 3));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtXy) {
 				if (getAnswer() != 0) {
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
@@ -893,35 +977,44 @@ public class Calculator extends JFrame {
 				setOperator(Operator.XY);
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbt10x) {
 				setAnswer(Math.pow(10, Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtCeil) {
 				setAnswer(Math.ceil(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtFloor) {
 				setAnswer(Math.floor(Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtPi) {
 				jtfDisplayArea.setText(answerToString(Math.PI));
 				setFontSize();
 			}
+			
 			else if (e.getSource() == jbtFactorial) {
 				setAnswer(factorial((int)Double.parseDouble(jtfDisplayArea.getText())));
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			}
+			
+			/////////////////////////////////////////////////////////////
+			
 			else if (e.getSource() == jbtBigZero) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "0");	
 				}
 			}
+			
 			else if (e.getSource() == jbtBigOne) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "1");	
@@ -929,6 +1022,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("1");
 			}
+			
 			else if (e.getSource() == jbtBigTwo) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "2");	
@@ -936,6 +1030,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("2");
 			}	
+			
 			else if (e.getSource() == jbtBigThree) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "3");	
@@ -943,6 +1038,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("3");
 			}
+			
 			else if (e.getSource() == jbtBigFour) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "4");	
@@ -950,6 +1046,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("4");
 			}
+			
 			else if (e.getSource() == jbtBigFive) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "5");	
@@ -957,6 +1054,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("5");
 			}
+			
 			else if (e.getSource() == jbtBigSix) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "6");	
@@ -964,6 +1062,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("6");
 			}
+			
 			else if (e.getSource() == jbtBigSeven) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "7");	
@@ -978,6 +1077,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("8");
 			}
+			
 			else if (e.getSource() == jbtBigNine) {
 				if (jtaDisplayArea.getText().equals("0") == false) {
 					jtaDisplayArea.setText(jtaDisplayArea.getText() + "9");	
@@ -985,6 +1085,7 @@ public class Calculator extends JFrame {
 				else
 					jtaDisplayArea.setText("9");
 			}
+			
 			else if (e.getSource() == jbtBigPlus) {
 				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
 					bigTemp = numberToArray(jtaDisplayArea.getText());
@@ -994,6 +1095,7 @@ public class Calculator extends JFrame {
 				disableBigOperatorButtons();
 				jbtBigEqual.setEnabled(true);
 			}	
+			
 			else if (e.getSource() == jbtBigMinus) {
 				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
 					bigTemp = numberToArray(jtaDisplayArea.getText());
@@ -1004,6 +1106,7 @@ public class Calculator extends JFrame {
 				disableBigOperatorButtons();
 				jbtBigEqual.setEnabled(true);
 			}
+			
 			else if (e.getSource() == jbtBigMultiplication) {
 				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
 					bigTemp = numberToArray(jtaDisplayArea.getText());
@@ -1014,6 +1117,7 @@ public class Calculator extends JFrame {
 				disableBigOperatorButtons();
 				jbtBigEqual.setEnabled(true);
 			}
+			
 			else if (e.getSource() == jbtBigDivision) {
 				if (Double.parseDouble(jtaDisplayArea.getText()) != 0) {
 					bigTemp = numberToArray(jtaDisplayArea.getText());
@@ -1024,6 +1128,7 @@ public class Calculator extends JFrame {
 				disableBigOperatorButtons();
 				jbtBigEqual.setEnabled(true);
 			}
+			
 			else if (e.getSource() == jbtBigEqual) {
 				int[] bigTemp2 = numberToArray(jtaDisplayArea.getText());
 					switch(getOperator()) {
@@ -1046,6 +1151,7 @@ public class Calculator extends JFrame {
 					jbtBigEqual.setEnabled(false);
 					bigTemp = new int[] {0};
 			}
+			
 			else if (e.getSource() == jbtBigClear) {
 				jtaDisplayArea.setText("0");
 				
@@ -1071,6 +1177,9 @@ public class Calculator extends JFrame {
 				jbtBigEqual.setEnabled(false);
 			}
 		}
+		
+		/////////////////////////////////////////////////////////////
+		
 		private double answer = 0;
 		private double memory = 0;
 		private double temp = 0;
@@ -1110,6 +1219,8 @@ public class Calculator extends JFrame {
 			return operator;
 		}
 		
+		/////////////////////////////////////////////////////////////
+		
 		public String answerToString(double answer) {
 			String string = String.valueOf(answer);
 			int indexOfDot = string.indexOf('.');
@@ -1130,6 +1241,8 @@ public class Calculator extends JFrame {
 			return string;
 		}
 		
+		/////////////////////////////////////////////////////////////
+		
 		public void setFontSize() {
 				int length = 9;
 				int textLength = jtfDisplayArea.getText().length();
@@ -1149,12 +1262,16 @@ public class Calculator extends JFrame {
 				jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
 		}
 		
+		/////////////////////////////////////////////////////////////
+		
 		public double factorial(int n) {
 			if (n == 0)
 				return 1;
 			else
 				return n * factorial(n - 1);
 		}
+		
+		/////////////////////////////////////////////////////////////
 		
 		public int[] numberToArray(String number) {
 			int length = (int)Math.ceil((double)number.length() / 4);
@@ -1325,6 +1442,8 @@ public class Calculator extends JFrame {
 			return result;
 		}
 		
+		/////////////////////////////////////////////////////////////
+		
 		public void disableBigNumberButtons() {
 			jbtBigZero.setEnabled(false);
 			jbtBigOne.setEnabled(false);
@@ -1345,7 +1464,7 @@ public class Calculator extends JFrame {
 			jbtBigDivision.setEnabled(false);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		Calculator frame = new Calculator();
 		frame.setLocationRelativeTo(null);
