@@ -1416,6 +1416,11 @@ public class Calculator extends JFrame {
 			int[] remainder = new int[length];
 			int[] temp;
 			
+			if (arrayToString(bigNumber2).equals("0"))
+				return "Infinite";
+			if (isBiggerOrEquals(bigNumber2, bigNumber1) && Arrays.equals(bigNumber1, bigNumber2) == false)
+				return "Invalid Input";
+			
 			System.arraycopy(bigNumber1, 0, remainder, 0, bigNumber1.length);
 
 			while(isBiggerOrEquals(remainder, bigNumber2)) {
@@ -1436,9 +1441,12 @@ public class Calculator extends JFrame {
 			for(int i = 0; i < bigNumber.length; i++)
 				result += String.valueOf(bigNumber[i]);
 			
-			while (result.charAt(0) == '0')
+			while (result.charAt(0) == '0') {
+				if (result.length() < 2)
+					break;
+				
 				result = result.substring(1);
-			
+			}
 			return result;
 		}
 		
