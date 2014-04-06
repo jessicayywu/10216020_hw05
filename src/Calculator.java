@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -23,6 +24,7 @@ public class Calculator extends JFrame {
 	JMenuItem jmiAdvanced = new JMenuItem("Advanced", 'A');
 	JMenuItem jmiBigNumber = new JMenuItem("Big Number BETA", 'B');
 	JMenuItem jmiViewHelp = new JMenuItem("View Help", 'H');
+	JMenuItem jmiSetPassword = new JMenuItem("Set Password", 'P');
 	JMenuItem jmiAbout = new JMenuItem("About", 'A');
 	
 	private JTextField jtfDisplayArea = new JTextField("0");
@@ -140,10 +142,10 @@ public class Calculator extends JFrame {
 		
 		return string = new String(characters);
 	}
-
+	
 	public Calculator() {
 		
-		final JDialog jdPassword = new JDialog((Frame)null, "Password", true);
+		final JDialog jdPassword = new JDialog((Frame)null, "Enter Password", true);
 		JPanel p01 = new JPanel(new BorderLayout());
 		p01.add(jlPassword, BorderLayout.WEST);
 		p01.add(jpfPassword, BorderLayout.CENTER);
@@ -161,6 +163,7 @@ public class Calculator extends JFrame {
 		jdPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);		
 		
 		jdPassword.addWindowListener(new WindowAdapter() {
+			@Override
 	    	public void windowClosing(WindowEvent we) {
 	    		System.exit(0);
 	    	}
@@ -210,10 +213,12 @@ public class Calculator extends JFrame {
 		jdSetPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);	
 		
 		jdSetPassword.addWindowListener(new WindowAdapter() {
-	    	public void windowClosing(WindowEvent we) {
-	    		System.exit(0);
-	    	}
-	    });
+			@Override
+		   	public void windowClosing(WindowEvent we) {
+		    	System.exit(0);
+		    }
+		});
+
 	    
 		jbtOK.addActionListener(new ActionListener() {
 			@Override
@@ -238,12 +243,50 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		final JDialog jdHelp = new JDialog((Frame)null, "Help", true);
+		
+		final JEditorPane jepHelp = new JEditorPane();
+		JScrollPane jspHelp = new JScrollPane(jepHelp);
+		jspHelp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jspHelp.setVisible(true);
+		
+		jepHelp.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+		jepHelp.setEditable(false);
+		
+		jdHelp.setLayout(new BorderLayout());
+		jdHelp.add(jspHelp, BorderLayout.CENTER);
+		jdHelp.add(p05, BorderLayout.SOUTH);
+		
+		jdHelp.setSize(400, 400);
+		jdHelp.setLocationRelativeTo(null);
+		jdHelp.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		java.net.URL helpURL = this.getClass().getResource("Help.html");
+
+		if (helpURL != null) {
+			try {
+				jepHelp.setPage(helpURL);
+
+	            } catch (IOException ioe) {
+	            	JOptionPane.showMessageDialog(null, "Reading File Error: Help.html", "Error", JOptionPane.ERROR_MESSAGE);
+	            }
+	    }
+		else {
+	        	JOptionPane.showMessageDialog(null, "Cannnot Find File: Reading File Error", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+		
+		/////////////////////////////////////////////////////////////
+		
 		JMenuBar jmb = new JMenuBar();
 		setJMenuBar(jmb);
 		
 		JMenu viewMenu = new JMenu("View");
 		viewMenu.setMnemonic('V');
 		jmb.add(viewMenu);
+		
+		JMenu editMenu = new JMenu("Edit");
+		editMenu.setMnemonic('E');
+		jmb.add(editMenu);
 		
 		JMenu helpMenu = new JMenu("Help");
 		helpMenu.setMnemonic('H');
@@ -252,6 +295,8 @@ public class Calculator extends JFrame {
 		viewMenu.add(jmiStandard);
 		viewMenu.add(jmiAdvanced);
 		viewMenu.add(jmiBigNumber);
+		
+		editMenu.add(jmiSetPassword);
 		
 		helpMenu.add(jmiViewHelp);
 		helpMenu.addSeparator();
@@ -375,7 +420,7 @@ public class Calculator extends JFrame {
 		jtaDisplayArea.setLineWrap(true);
 		jtaDisplayArea.setWrapStyleWord(false);
 		
-		JScrollPane jspDisplayArea = new JScrollPane(jtaDisplayArea);
+		final JScrollPane jspDisplayArea = new JScrollPane(jtaDisplayArea);
 		jspDisplayArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		/////////////////////////////////////////////////////////////
@@ -445,17 +490,27 @@ public class Calculator extends JFrame {
 				setTitle("Big Number Calculator (BETA)");
 				add(p4, BorderLayout.SOUTH);
 				add(p5, BorderLayout.EAST);
-				add(jtaDisplayArea, BorderLayout.CENTER);
+				add(jspDisplayArea, BorderLayout.CENTER);
 				
 				getContentPane().revalidate();
 				repaint();
 			}
 		});
 		
+		jmiSetPassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jdSetPassword.setVisible(true);
+				jdSetPassword.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+			}
+		});
+		
 		jmiViewHelp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				jdHelp.setVisible(true);
+				
 			}
 		});
 		
