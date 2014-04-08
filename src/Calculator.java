@@ -11,15 +11,15 @@ public class Calculator extends JFrame {
 	/** Create Components
 	========================================================= */
 	
-	/* Dialogs
+	/** Dialogs
 	--------------------------------- */
 	
-	/* Enter a Password */
+	/** Enter a Password */
 	private JLabel jlPassword = new JLabel("Password: ");
 	private JPasswordField jpfPassword = new JPasswordField(12);
 	private JButton jbtEnter = new JButton("Enter");
 	
-	/* Set a Password */
+	/** Set a Password */
 	private JLabel jlNoPassword = new JLabel("Please Set Your Password.");
 	private JLabel jlSetPassword = new JLabel("New Password: ");
 	private JPasswordField jpfSetPassword = new JPasswordField(12);
@@ -27,28 +27,28 @@ public class Calculator extends JFrame {
 	private JPasswordField jpfCheckPassword = new JPasswordField(12);
 	private JButton jbtOK = new JButton("OK");
 	
-	/* Menu Bar
+	/** Menu Bar
 	--------------------------------- */
 	
-	/* View */
+	/** View */
 	JMenuItem jmiStandard = new JMenuItem("Standard", 'S');
 	JMenuItem jmiAdvanced = new JMenuItem("Advanced", 'A');
 	JMenuItem jmiBigNumber = new JMenuItem("Big Number BETA", 'B');
 	
-	/* Edit */
+	/** Edit */
 	JMenuItem jmiSetPassword = new JMenuItem("Set Password", 'P');
 	
-	/* Help */
+	/** Help */
 	JMenuItem jmiViewHelp = new JMenuItem("View Help", 'H');
 	JMenuItem jmiAbout = new JMenuItem("About", 'A');
 	
-	/* Calculators
+	/** Calculators
 	--------------------------------- */
 	
-	/* Display Area for Standard and Advanced Calculator*/
+	/** Display Area for Standard and Advanced Calculator*/
 	private JTextField jtfDisplayArea = new JTextField("0");
 	
-	/* Standard Calculator */
+	/** Standard Calculator */
 	private JLabel jlM = new JLabel("M");
 	
 	private JButton jbtClear = new JButton("C");
@@ -81,7 +81,7 @@ public class Calculator extends JFrame {
 	private JButton jbtToggleSign = new JButton("±");
 	private JButton jbtEqual = new JButton("=");
 	
-	/* Advanced Calculator */
+	/** Advanced Calculator */
 	private JButton jbtSin = new JButton("sin");
 	private JButton jbtCos = new JButton("cos");
 	private JButton jbtTan = new JButton("tan");
@@ -110,7 +110,7 @@ public class Calculator extends JFrame {
 	private JButton jbtPi = new JButton("π");
 	private JButton jbtFactorial = new JButton("n!");
 	
-	/* Big Number Calculator */
+	/** Big Number Calculator */
 	private JTextArea jtaDisplayArea = new JTextArea("0", 30, 30);
 	
 	private JButton jbtBigZero = new JButton("0");
@@ -137,9 +137,9 @@ public class Calculator extends JFrame {
 	/** Encode and Decode the Password
 	========================================================= */
 	
-	/* Encode the Password
+	/** Encode the Password
 	--------------------------------- */
-	
+	/** A Very, Very Very Simple Encoder */
 	String encode(String string) {
 		char[] characters = new char[string.length()];
 		char temp;
@@ -156,9 +156,10 @@ public class Calculator extends JFrame {
 		return string = new String(characters);
 	}
 	
-	/* Decode the Password
+	/** Decode the Password
 	---------------------------------*/
 	
+	/** A Very, Very Very Simple Decoder */
 	String decode(String string) {
 		char[] characters = new char[string.length()];
 		char temp;
@@ -183,7 +184,10 @@ public class Calculator extends JFrame {
 		/** Enter a Password
 		========================================================= */
 		
+		/** Create Enter Password Dialog */
 		final JDialog jdPassword = new JDialog((Frame)null, "Enter Password", true);
+		
+		/** Panels */
 		JPanel p01 = new JPanel(new BorderLayout());
 		p01.add(jlPassword, BorderLayout.WEST);
 		p01.add(jpfPassword, BorderLayout.CENTER);
@@ -191,13 +195,14 @@ public class Calculator extends JFrame {
 		JPanel p02 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		p02.add(jbtEnter);
 		
+		/** Look */
 		jdPassword.setLayout(new GridLayout(2, 1, 5, 5));
 		jdPassword.add(p01);
 		jdPassword.add(p02);
 		jdPassword.setSize(250, 120);
 		jdPassword.setLocationRelativeTo(null);
 
-		
+		/** Events */
 		jdPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);		
 		
 		jdPassword.addWindowListener(new WindowAdapter() {
@@ -231,7 +236,10 @@ public class Calculator extends JFrame {
 		/** Set a Password
 		========================================================= */
 		
+		/** Create Set Password Dialog */
 		final JDialog jdSetPassword = new JDialog((Frame)null, "Set Password", true);
+		
+		/** Panels */
 		JPanel p03 = new JPanel(new BorderLayout());
 		p03.add(jlSetPassword, BorderLayout.WEST);
 		p03.add(jpfSetPassword, BorderLayout.CENTER);
@@ -243,6 +251,7 @@ public class Calculator extends JFrame {
 		JPanel p05 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		p05.add(jbtOK);
 		
+		/** Look */
 		jdSetPassword.setLayout(new GridLayout(4, 1, 5, 5));
 		jdSetPassword.add(jlNoPassword);
 		jdSetPassword.add(p03);
@@ -251,6 +260,7 @@ public class Calculator extends JFrame {
 		jdSetPassword.setSize(250, 200);
 		jdSetPassword.setLocationRelativeTo(null);
 		
+		/** Events*/
 		jdSetPassword.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);	
 		
 		jdSetPassword.addWindowListener(new WindowAdapter() {
@@ -299,9 +309,13 @@ public class Calculator extends JFrame {
 		/** Help
 		========================================================= */
 		
+		/** Create Help Dialog */
 		final JDialog jdHelp = new JDialog((Frame)null, "Help", true);
 		
+		/** Create Editor Pane */
 		final JEditorPane jepHelp = new JEditorPane();
+		
+		/** Create Scroll Pane */
 		JScrollPane jspHelp = new JScrollPane(jepHelp);
 		jspHelp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		jspHelp.setVisible(true);
@@ -309,6 +323,7 @@ public class Calculator extends JFrame {
 		jepHelp.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
 		jepHelp.setEditable(false);
 		
+		/** Look */
 		jdHelp.setLayout(new BorderLayout());
 		jdHelp.add(jspHelp, BorderLayout.CENTER);
 		jdHelp.add(p05, BorderLayout.SOUTH);
@@ -317,6 +332,7 @@ public class Calculator extends JFrame {
 		jdHelp.setLocationRelativeTo(null);
 		jdHelp.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
+		/** Read the Help.html File */
 		java.net.URL helpURL = this.getClass().getResource("Help.html");
 
 		if (helpURL != null) {
@@ -380,12 +396,16 @@ public class Calculator extends JFrame {
 		/** Standard Calculator
 		========================================================= */
 		
+		/** Create the Panel for Display Area */
 		final JPanel p1 = new JPanel(new BorderLayout());
+		
+		/** Memory */
 		jlM.setText("");
 		jlM.setOpaque(true);
 		jlM.setBackground(Color.WHITE);
 		p1.add(jlM, BorderLayout.WEST);
 		
+		/** Display Area */
 		jtfDisplayArea.setEditable(false);
 		jtfDisplayArea.setBackground(Color.WHITE);
 		jtfDisplayArea.setFont(new Font("Dialog", Font.BOLD, 35));
@@ -394,6 +414,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		/** Create the Panel for Buttons */
 		final JPanel p2 = new JPanel(new GridLayout(5, 5, 6, 6));
 		
 		p2.add(jbtClear);
@@ -431,6 +452,7 @@ public class Calculator extends JFrame {
 		/** Advanced Calculator
 		========================================================= */
 		
+		/** Create the Panel for Buttons */
 		final JPanel p3 = new JPanel(new GridLayout(5, 5, 6, 6));
 		
 		p3.add(jbtSin);
@@ -468,6 +490,7 @@ public class Calculator extends JFrame {
 		/** Big Number Calculator
 		========================================================= */
 		
+		/** Create the Panel for Number Buttons */
 		final JPanel p4 = new JPanel(new GridLayout(1, 10, 5, 5));
 		
 		p4.add(jbtBigZero);
@@ -483,6 +506,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		/** Create the Panel for Operator Buttons */
 		final JPanel p5 = new JPanel(new GridLayout(6, 1, 7, 7));
 		
 		jbtBigEqual.setEnabled(false);
@@ -496,6 +520,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		/** Look */
 		jtaDisplayArea.setEditable(false);
 		jtaDisplayArea.setBackground(Color.WHITE);
 		jtaDisplayArea.setFont(new Font("Dialog", Font.BOLD, 30));
@@ -514,7 +539,7 @@ public class Calculator extends JFrame {
 		/** Viiew
 		========================================================= */
 		
-		/* Initial Calculator
+		/** Initial Calculator
 		--------------------------------- */
 		
 		setLayout(new BorderLayout());
@@ -525,7 +550,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
-		/* Standard Calculator
+		/** Standard Calculator
 		--------------------------------- */
 		
 		jmiStandard.addActionListener(new ActionListener() {
@@ -545,7 +570,7 @@ public class Calculator extends JFrame {
 			}
 		});
 
-		/* Advanced Calculator
+		/** Advanced Calculator
 		--------------------------------- */
 		
 		jmiAdvanced.addActionListener(new ActionListener() {
@@ -566,7 +591,7 @@ public class Calculator extends JFrame {
 			}
 		});
 		
-		/* Big Number Calculator
+		/** Big Number Calculator
 		--------------------------------- */
 		
 		jmiBigNumber.addActionListener(new ActionListener() {
@@ -590,7 +615,7 @@ public class Calculator extends JFrame {
 		/** Edit
 		========================================================= */
 		
-		/* Set Password
+		/** Set Password
 		--------------------------------- */
 		
 		jmiSetPassword.addActionListener(new ActionListener() {
@@ -605,7 +630,7 @@ public class Calculator extends JFrame {
 		/** Help
 		========================================================= */
 		
-		/* View Help
+		/** View Help
 		--------------------------------- */
 		
 		jmiViewHelp.addActionListener(new ActionListener() {
@@ -616,7 +641,7 @@ public class Calculator extends JFrame {
 			}
 		});
 		
-		/* About
+		/** About
 		--------------------------------- */
 		
 		jmiAbout.addActionListener(new ActionListener() {
@@ -644,7 +669,7 @@ public class Calculator extends JFrame {
 		
 		ButtonListener buttons = new ButtonListener(); 
 		
-		/* Standard Calculator
+		/** Standard Calculator
 		--------------------------------- */
 		
 		jbtClear.addActionListener(buttons);
@@ -679,7 +704,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
-		/* Advanced Calculator
+		/** Advanced Calculator
 		--------------------------------- */
 		
 		jbtSin.addActionListener(buttons);
@@ -712,7 +737,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
-		/* Big Number Calculator
+		/** Big Number Calculator
 		--------------------------------- */
 		
 		jbtBigPlus.addActionListener(buttons);
@@ -744,7 +769,7 @@ public class Calculator extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			/* Standard Calculator
+			/** Standard Calculator
 			--------------------------------- */
 			
 			if(e.getSource() == jbtClear) {
@@ -1028,7 +1053,7 @@ public class Calculator extends JFrame {
 			
 			/////////////////////////////////////////////////////////////
 			
-			/* Advanced Calculator
+			/** Advanced Calculator
 			--------------------------------- */
 			
 			else if (e.getSource() == jbtSin) {
@@ -1197,7 +1222,7 @@ public class Calculator extends JFrame {
 			
 			/////////////////////////////////////////////////////////////
 			
-			/* Big Number Calculator
+			/** Big Number Calculator
 			--------------------------------- */
 			
 			else if (e.getSource() == jbtBigZero) {
@@ -1374,7 +1399,7 @@ public class Calculator extends JFrame {
 		/** Methods
 		========================================================= */
 		
-		/* Standard and Advanced Calculator
+		/** Standard and Advanced Calculator
 		--------------------------------- */
 		private double answer = 0;
 		private double memory = 0;
@@ -1383,6 +1408,7 @@ public class Calculator extends JFrame {
 
 		private Operator operator;
 		
+		/** Set and Get answer, memory, temp, and operator */
 		public void setAnswer(double newAnswer) {
 			answer = newAnswer;
 		}
@@ -1417,6 +1443,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		/** Convert the answer to a string */
 		public String answerToString(double answer) {
 			String string = String.valueOf(answer);
 			int indexOfDot = string.indexOf('.');
@@ -1439,6 +1466,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		/** Resize the font*/
 		public void setFontSize() {
 				int length = 9;
 				int textLength = jtfDisplayArea.getText().length();
@@ -1460,9 +1488,10 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
-		/* Advanced Calculator
+		/** Advanced Calculator
 		--------------------------------- */
 		
+		/** Calculate the factorial */
 		public double factorial(int n) {
 			if (n == 0)
 				return 1;
@@ -1472,9 +1501,10 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
-		/* Big Number Calculator
+		/** Big Number Calculator
 		--------------------------------- */
 		
+		/** Convert the number to an array */
 		public int[] numberToArray(String number) {
 			int length = (int)Math.ceil((double)number.length() / 4);
 			int[] bigNumber = new int[length];
@@ -1495,6 +1525,7 @@ public class Calculator extends JFrame {
 			return bigNumber;
 		}
 		
+		/** Plus */
 		public int[] plus(int[] bigNumber1, int[] bigNumber2) {
 			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length + 1 : bigNumber2.length + 1;
 			int[] sum = new int[length];
@@ -1515,6 +1546,31 @@ public class Calculator extends JFrame {
 			return sum;
 		}
 		
+		/** Check if the first number is bigger than or equals the second */
+		public boolean isBiggerOrEquals(int[] bigNumber1, int[] bigNumber2) {
+			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
+			int[] bigNum1 = new int[length];
+			int[] bigNum2 = new int[length];
+			
+			System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
+			System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
+			
+			boolean iboe = false;
+			
+			for (int i = 0; i < length; i++) {
+				if(bigNum1[i] > bigNum2[i]) {
+					iboe = true;
+					break;
+				}
+			}
+			
+			if (Arrays.equals(bigNum1, bigNum2))
+				iboe = true;
+			
+			return iboe;
+		}
+		
+		/** Minus */
 		public int[] minus(int[] bigNumber1, int[] bigNumber2) {
 			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
 			int[] difference = new int[length];
@@ -1549,6 +1605,7 @@ public class Calculator extends JFrame {
 			return difference;
 		}
 		
+		/** Multiply */
 		public int[] multiply(int[] bigNumber1, int[] bigNumber2) {
 			int length = bigNumber1.length + bigNumber2.length;
 			int[] product = new int[length];
@@ -1573,29 +1630,7 @@ public class Calculator extends JFrame {
 			return product;
 		}
 		
-		public boolean isBiggerOrEquals(int[] bigNumber1, int[] bigNumber2) {
-			int length = (bigNumber1.length > bigNumber2.length) ? bigNumber1.length : bigNumber2.length;
-			int[] bigNum1 = new int[length];
-			int[] bigNum2 = new int[length];
-			
-			System.arraycopy(bigNumber1, 0, bigNum1, length - bigNumber1.length, bigNumber1.length);
-			System.arraycopy(bigNumber2, 0, bigNum2, length - bigNumber2.length, bigNumber2.length);
-			
-			boolean iboe = false;
-			
-			for (int i = 0; i < length; i++) {
-				if(bigNum1[i] > bigNum2[i]) {
-					iboe = true;
-					break;
-				}
-			}
-			
-			if (Arrays.equals(bigNum1, bigNum2))
-				iboe = true;
-			
-			return iboe;
-		}
-		
+		/** A big number plus a integer */
 		public  int[] plusInteger(int[] bigNumber, int n) {
 			int length = bigNumber.length + 1;
 			int[] bigNum = new int[length];
@@ -1612,6 +1647,7 @@ public class Calculator extends JFrame {
 			return bigNum;
 		}
 		
+		/** Divide */
 		public String divide(int[] bigNumber1, int[] bigNumber2) {
 			int length = bigNumber1.length;
 			int[] quotient = new int[length];
@@ -1637,6 +1673,7 @@ public class Calculator extends JFrame {
 			return arrayToString(quotient) + "\n..." + arrayToString(remainder);
 		}
 		
+		/** Convert the big number array to a string */
 		public String arrayToString(int[] bigNumber) {
 			String result = "";
 			
@@ -1654,6 +1691,7 @@ public class Calculator extends JFrame {
 		
 		/////////////////////////////////////////////////////////////
 		
+		/** Disable the number buttons */
 		public void disableBigNumberButtons() {
 			jbtBigZero.setEnabled(false);
 			jbtBigOne.setEnabled(false);
@@ -1667,6 +1705,7 @@ public class Calculator extends JFrame {
 			jbtBigNine.setEnabled(false);
 		}
 		
+		/** Disable the operator buttons */
 		public void disableBigOperatorButtons() {
 			jbtBigPlus.setEnabled(false);
 			jbtBigMinus.setEnabled(false);
