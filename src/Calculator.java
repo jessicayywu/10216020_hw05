@@ -338,7 +338,7 @@ public class Calculator extends JFrame {
 		jdHelp.setLayout(new BorderLayout());
 		jdHelp.add(jspHelp, BorderLayout.CENTER);
 		
-		jdHelp.setSize(400, 400);
+		jdHelp.setSize(550, 550);
 		jdHelp.setLocationRelativeTo(null);
 		jdHelp.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
