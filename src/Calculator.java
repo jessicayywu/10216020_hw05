@@ -55,12 +55,12 @@ public class Calculator extends JFrame {
 	private JLabel jlM = new JLabel("M");
 	
 	private JButton jbtClear = new JButton("C");
-	private JButton jbtBackspace = new JButton("°ˆ");
+	private JButton jbtBackspace = new JButton("‚Üê");
 	
 	private JButton jbtPlus = new JButton("+");
 	private JButton jbtMinus = new JButton("-");
-	private JButton jbtMultiplication = new JButton("°—");
-	private JButton jbtDivision = new JButton("°“");
+	private JButton jbtMultiplication = new JButton("√ó");
+	private JButton jbtDivision = new JButton("√∑");
 	
 	private JButton jbtMR = new JButton("MR");
 	private JButton jbtMC = new JButton("MC");
@@ -78,10 +78,10 @@ public class Calculator extends JFrame {
 	private JButton jbtEight = new JButton("8");
 	private JButton jbtNine = new JButton("9");
 	
-	private JButton jbtSquareRoot = new JButton("°‘");
+	private JButton jbtSquareRoot = new JButton("‚àö");
 	private JButton jbtModulo = new JButton("%");
 	private JButton jbtDecimalPoint = new JButton(".");
-	private JButton jbtToggleSign = new JButton("°”");
+	private JButton jbtToggleSign = new JButton("¬±");
 	private JButton jbtEqual = new JButton("=");
 	
 	/** Advanced Calculator */
@@ -110,7 +110,7 @@ public class Calculator extends JFrame {
 	
 	private JButton jbtCeil = new JButton("ceil");
 	private JButton jbtFloor = new JButton("floor");
-	private JButton jbtPi = new JButton("£k");
+	private JButton jbtPi = new JButton("œÄ");
 	private JButton jbtFactorial = new JButton("n!");
 	
 	/** Big Number Calculator */
@@ -129,8 +129,8 @@ public class Calculator extends JFrame {
 	
 	private JButton jbtBigPlus = new JButton("+");
 	private JButton jbtBigMinus = new JButton("-");
-	private JButton jbtBigMultiplication = new JButton("°—");
-	private JButton jbtBigDivision = new JButton("°“");
+	private JButton jbtBigMultiplication = new JButton("√ó");
+	private JButton jbtBigDivision = new JButton("√∑");
 	
 	private JButton jbtBigEqual = new JButton("=");
 	private JButton jbtBigClear = new JButton("Clear");
@@ -337,7 +337,6 @@ public class Calculator extends JFrame {
 		/** Look */
 		jdHelp.setLayout(new BorderLayout());
 		jdHelp.add(jspHelp, BorderLayout.CENTER);
-		jdHelp.add(p05, BorderLayout.SOUTH);
 		
 		jdHelp.setSize(400, 400);
 		jdHelp.setLocationRelativeTo(null);
@@ -772,6 +771,7 @@ public class Calculator extends JFrame {
 				jtfDisplayArea.setText("0");
 				setAnswer(0);
 				setTemp(0);
+				setEqualClicked(false);
 				setOperator(Operator.NONE);
 				setFontSize();
 			} // End of the events of the jbtClear
@@ -794,6 +794,7 @@ public class Calculator extends JFrame {
 					jtfDisplayArea.setText("0");
 				}  // End of the if-else statement
 				
+				setEqualClicked(false);
 				setOperator(Operator.PLUS);
 				setFontSize();
 			} // End of the events of the jbtPlus
@@ -809,6 +810,7 @@ public class Calculator extends JFrame {
 					jtfDisplayArea.setText("0");
 				}  // End of the if-else statement
 				
+				setEqualClicked(false);
 				setOperator(Operator.MINUS);
 				setFontSize();
 			} // End of the events of the jbtMinus
@@ -824,6 +826,7 @@ public class Calculator extends JFrame {
 					jtfDisplayArea.setText("0");
 				}  // End of the if-else statement
 				
+				setEqualClicked(false);
 				setOperator(Operator.MULTIPLICATION);
 				setFontSize();
 			} // End of the events of the jbtMultiplication
@@ -839,6 +842,7 @@ public class Calculator extends JFrame {
 					jtfDisplayArea.setText("0");
 				} // End of the if-else statement
 				
+				setEqualClicked(false);
 				setOperator(Operator.DIVISION);
 				setFontSize();
 			} // End of the events of the jbtDivision
@@ -853,6 +857,7 @@ public class Calculator extends JFrame {
 				setAnswer(0);
 				setTemp(0);
 				setMemory(0);
+				setEqualClicked(false);
 				setOperator(Operator.NONE);
 				setFontSize();
 			} // End of the events of the jbtMC
@@ -875,7 +880,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtZero) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "0");
 						setFontSize();
 					} // End of the inner if statement
@@ -884,7 +889,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtOne) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "1");	
 						setFontSize();
 					}
@@ -895,7 +900,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtTwo) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "2");
 						setFontSize();
 					}
@@ -906,7 +911,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtThree) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "3");
 						setFontSize();
 					}
@@ -917,7 +922,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtFour) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "4");
 						setFontSize();
 					}
@@ -928,7 +933,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtFive) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "5");
 						setFontSize();
 					}
@@ -939,7 +944,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtSix) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "6");
 						setFontSize();
 					}
@@ -950,7 +955,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtSeven) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "7");
 						setFontSize();
 					}
@@ -961,7 +966,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtEight) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "8");
 						setFontSize();
 					}
@@ -972,7 +977,7 @@ public class Calculator extends JFrame {
 			
 			else if (e.getSource() == jbtNine) {
 				if (jtfDisplayArea.getText().length() < ((getWidth() / 100) * 5)) {
-					if (jtfDisplayArea.getText().equals("0") == false) {
+					if (jtfDisplayArea.getText().equals("0") == false && getOperator() == Operator.NONE) {
 						jtfDisplayArea.setText(jtfDisplayArea.getText() + "9");
 						setFontSize();
 					}
@@ -1019,10 +1024,14 @@ public class Calculator extends JFrame {
 			} // End of the events of the jbtToggleSign
 			
 			else if (e.getSource() == jbtEqual) {
-				if (getTemp() == 0)
+				
+				if (getEqualClicked() == false)
 					setTemp(Double.parseDouble(jtfDisplayArea.getText()));
+				
+				if (getEqualClicked() == false && getTemp() == 0)
+					setTemp(getAnswer());
 					
-				switch(getOperator()) {
+				switch(getOperator()) {				
 					case PLUS:
 						setAnswer((getAnswer() + getTemp()));
 						break;
@@ -1046,7 +1055,8 @@ public class Calculator extends JFrame {
 						break;
 					default:
 				} // End of the switch statement
-						
+				
+				setEqualClicked(true);
 				jtfDisplayArea.setText(answerToString(getAnswer()));
 				setFontSize();
 			} // End of the events of the jbtEqual
@@ -1397,11 +1407,12 @@ public class Calculator extends JFrame {
 		private double answer = 0;
 		private double memory = 0;
 		private double temp = 0;
+		private boolean equalClicked = false;
 		int[] bigTemp = {0};
 
 		private Operator operator;
 		
-		/** Set and Get answer, memory, temp, and operator */
+		/** Set and Get answer, memory, temp, equalClicked, and operator */
 		public void setAnswer(double newAnswer) {
 			answer = newAnswer;
 		} // End of the setAnswer method
@@ -1425,6 +1436,14 @@ public class Calculator extends JFrame {
 		public double getTemp() {
 			return temp;
 		} // End of the getTemp method
+		
+		public void setEqualClicked(boolean newEqualClicked) {
+			equalClicked = newEqualClicked;
+		}
+		
+		public boolean getEqualClicked() {
+			return equalClicked;
+		}
 		
 		public void setOperator(Operator newOperator) {
 			operator = newOperator;
